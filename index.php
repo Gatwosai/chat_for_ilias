@@ -27,7 +27,7 @@
           <label for="floatingPassword">Пароль</label>
         </div>
         <button class="w-100 btn btn-lg btn-primary" type="submit">Вход</button>
-        <p class="mt-5 mb-3 text-muted">&copy; Alexander Belyaev</p>
+        <p class="mt-5 mb-3 text-muted">&copy; Александр Беляев</p>
       </form>
     </main>
 
