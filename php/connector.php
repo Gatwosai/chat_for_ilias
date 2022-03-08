@@ -18,7 +18,7 @@ class ILIAS_CONNECTOR{
 }
 
 class ILIAS_SOAP {
-	private static $ilias_base_url = "http://ilias/"; //здесь указать адрес до ILIAS, который установлен локально
+	private static $ilias_base_url = "http://localhost/"; //здесь указать адрес до ILIAS, который установлен локально
 	private static $ilias_client = "test1"; //здесь указать Client ID, который прописан во время установки
 
 	public static function GetClient(){
