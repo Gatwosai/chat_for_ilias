@@ -20,7 +20,7 @@
 						<div class="d-flex bd-highlight">
 							<div class="mb-md-2 user_info">
                                 <img src="./assets/icons/teacher.png" class="mb-2 rounded-circle user_img_msg">
-								<span>Aleksey</span>
+								<span>Алексей Васильев</span>
 							</div>
 							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
 							<div class="action_menu">
@@ -33,7 +33,7 @@
 							</div>
 						</div>
 						<div class="input-group">
-							<input type="text" placeholder="Search..." name="" class="form-control search">
+							<input type="text" placeholder="Поиск..." name="" class="form-control search">
 							<span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
 						</div>
 					</div>
@@ -46,8 +46,8 @@
 									<span class="online_icon"></span>
 								</div>
 								<div class="user_info">
-									<span>Aleksandr</span>
-									<p>Aleksandr is online</p>
+									<span>Пётр Сидоров</span>
+									<p>Ага, все вы так говорите</p>
 								</div>
 							</div>
 						</li>
@@ -59,20 +59,8 @@
 									--->
 								</div>
 								<div class="user_info">
-									<span>IVT-82</span>
-									<p>20 members</p>
-								</div>
-							</div>
-						</li>
-						<li>
-							<div class="d-flex bd-highlight">
-								<div class="img_cont">
-									<img src="./assets/icons/teacher_woman.png" class="rounded-circle user_img">
-									<span class="online_icon"></span>
-								</div>
-								<div class="user_info">
-									<span>Angelina</span>
-									<p>Angelina is online</p>
+									<span>ИВТ-82</span>
+									<p>Егор Блинов: пара в 13:35</p>
 								</div>
 							</div>
 						</li>
@@ -83,8 +71,20 @@
 									<span class="online_icon offline"></span>
 								</div>
 								<div class="user_info">
-									<span>Anna</span>
-									<p>Anna left 30 mins ago</p>
+									<span>Анна Петрова</span>
+									<p>Скинь свой отчет по Ивановой</p>
+								</div>
+							</div>
+						</li>
+						<li>
+							<div class="d-flex bd-highlight">
+								<div class="img_cont">
+									<img src="./assets/icons/teacher_woman.png" class="rounded-circle user_img">
+									<span class="online_icon"></span>
+								</div>
+								<div class="user_info">
+									<span>Наталья Иванова</span>
+									<p>Жду отчет сегодня</p>
 								</div>
 							</div>
 						</li>
@@ -92,11 +92,10 @@
 							<div class="d-flex bd-highlight">
 								<div class="img_cont">
 									<img src="./assets/icons/group.png" class="rounded-circle user_img">
-									
 								</div>
 								<div class="user_info">
-									<span>Programing</span>
-									<p>4 members</p>
+									<span>Структуры данных</span>
+									<p>Александр Тасшев: Файл</p>
 								</div>
 							</div>
 						</li>
@@ -114,8 +113,8 @@
 									<span class="online_icon"></span>
 								</div>
 								<div class="user_info">
-									<span>Chat with Aleksandr</span>
-									<p>7 Messages</p>
+									<span>Пётр Сидоров</span>
+									<p>онлайн</p>
 								</div>
 							</div>
 							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
@@ -134,14 +133,23 @@
 									<img src="./assets/icons/student.jpg" class="rounded-circle user_img_msg">
 								</div>
 								<div class="msg_container">
-									Hi, how are you Aleksey?
-									<span class="msg_time">8:40 AM, Today</span>
+									Здравствуйте, Алексей Владимирович. У меня вопрос по поводу лабораторной работы.
+									<span class="msg_time">8:40, Сегодня</span>
 								</div>
 							</div>
 							<div class="d-flex justify-content-end mb-4">
 								<div class="msg_container_send">
-									Hi, Aleksandr. I am good, thx. How about you?
-									<span class="msg_time_send">8:55 AM, Today</span>
+									Здравствуйте, Пётр. Все ответы на типичные вопросы я подготовил в файле.
+									<span class="msg_time_send">8:55, Сегодня</span>
+								</div>
+								<div class="img_cont_msg">
+									<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
+								</div>
+							</div>
+							<div class="d-flex justify-content-end mb-4">
+								<div class="msg_container_send">
+									картинка
+									<span class="msg_time_send">8:55, Сегодня</span>
 								</div>
 								<div class="img_cont_msg">
 									<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
@@ -152,14 +160,14 @@
 									<img src="./assets/icons/student.jpg" class="rounded-circle user_img_msg">
 								</div>
 								<div class="msg_container">
-									I am good too, thank you for work
-									<span class="msg_time">9:00 AM, Today</span>
+									Я нашёл ответ на свой вопрос, спасибо.
+									<span class="msg_time">9:00, Сегодня</span>
 								</div>
 							</div>
 							<div class="d-flex justify-content-end mb-4">
 								<div class="msg_container_send">
-									You are welcome
-									<span class="msg_time_send">9:05 AM, Today</span>
+									Не забудьте, что скоро у Вас защита диплома.
+									<span class="msg_time_send">9:05, Сегодня</span>
 								</div>
 								<div class="img_cont_msg">
 									<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
@@ -170,33 +178,24 @@
 									<img src="./assets/icons/student.jpg" class="rounded-circle user_img_msg">
 								</div>
 								<div class="msg_container">
-									I am looking for your new works
-									<span class="msg_time">9:07 AM, Today</span>
+									Да я успею доделать его, там еще преддипломная практика, время есть!
+									<span class="msg_time">9:07, Сегодня</span>
 								</div>
 							</div>
 							<div class="d-flex justify-content-end mb-4">
 								<div class="msg_container_send">
-									Ok, thank you. Have a good day
-									<span class="msg_time_send">9:10 AM, Today</span>
+									Ага, все вы так говорите.
+									<span class="msg_time_send">9:10, Сегодня</span>
 								</div>
 								<div class="img_cont_msg">
 									<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
-								</div>
-							</div>
-							<div class="d-flex justify-content-start mb-4">
-								<div class="img_cont_msg">
-									<img src="./assets/icons/student.jpg" class="rounded-circle user_img_msg">
-								</div>
-								<div class="msg_container">
-									Bye, see you
-									<span class="msg_time">9:12 AM, Today</span>
 								</div>
 							</div>
 						</div>
 						<div class="card-footer">
 							<div class="input-group">
 								<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
-								<textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+								<textarea name="" class="form-control type_msg" placeholder="Ввод сообщения..."></textarea>
 								<span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
 							</div>
 						</div>

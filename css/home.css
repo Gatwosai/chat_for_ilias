@@ -9,7 +9,7 @@
 		.chat{
 			height: 100%;
 			margin-bottom: 5px;
-			
+
 		}
 		.card{
 			height: 100%;
@@ -95,13 +95,13 @@
 		.user_img{
 			height: 70px;
 			width: 70px;
-		
+
 		}
 		.user_img_msg{
 			height: 40px;
 			width: 40px;
-			
-		
+
+
 		}
 	.img_cont{
 			position: relative;
@@ -208,19 +208,19 @@
 	}
 	.action_menu ul li i, .action_menu_chat ul li i{
 		padding-right: 10px;
-	
+
 	}
 	.action_menu ul li:hover, .action_menu_chat ul li:hover{
 		cursor: pointer;
 		background-color: rgba(0,0,0,0.2);
 	}
-	@media screen and (max-width: 576px){
+	@media screen and (max-width: 400px){
 	.contacts_card{
 		margin-bottom: 15px !important;
 	}
-	
+
 	}
-	
+
 /* width */
 *::-webkit-scrollbar {
 	width: 4px;
@@ -239,7 +239,7 @@
 /* Handle on hover */
 *::-webkit-scrollbar-thumb:hover {
 	background: #3289c8;
-}	
+}
 textarea {
 	resize: none;
 }
