@@ -1,9 +1,19 @@
 <?php
-/** 
- * Скрипт подключается к базе данных чата.
+/**
+ * Скрипт подключения к базе данных чата.
  * server name = localhost;
- * user name = root;
- * password = '';
+ * user name = iliasuser;
+ * password = '123';
  * database name = chat.
  */
-echo 'База данных подключена';
+$serv_name = "localhost";
+$usr_name = "iliasuser";
+$pass = "123";
+$db_name = "chat";
+try {
+    $conn = new PDO("mysql:host=$serv_name;dbname=$db_name",
+                                $usr_name, $pass);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch(PDOException $err) {
+    echo "Подключение к базе данных ilias не удалось: ".$err->getMessage();
+}

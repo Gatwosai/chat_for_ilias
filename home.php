@@ -8,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		
+
 		<title>Chat</title>
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -83,14 +83,14 @@
 							<div class="input-group">
 								<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
 								<textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
-								<span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+								<span class="input-group-text send_btn" id=sendBtn><i class="fas fa-location-arrow"></i></span>
 							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		
+
 
 		<script src="./js/chat.js"></script>
 	</body>
