@@ -9,16 +9,14 @@ $(document).ready(function(){
 
     $("#sendBtn").on('click', function() {
         message = $("#message").val();
-        alert("123");
         //if (message == "") return;
-        //$.post("../ajax/write_msg.php"), {
-                //message: message,
-                //to_id: <?=$chatWith['user_id']?>
-            //},
-            //function(data, status) {
-
-                //$("#message").val("");
-                //$("#chatBox").append(data);
-            //}
+        $.post("./ajax/write_msg.php"), {
+                message: "message1",
+                to_id: 1
+            },
+            function(data, status) {
+                $("#message").val("");
+                $("#chatBox").append(data);
+            }
     });
 });

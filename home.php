@@ -82,7 +82,7 @@
 						<div class="card-footer">
 							<div class="input-group">
 								<span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
-								<textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+								<textarea name="" class="form-control type_msg" id=message placeholder="Type your message..."></textarea>
 								<span class="input-group-text send_btn" id=sendBtn><i class="fas fa-location-arrow"></i></span>
 							</div>
 						</div>

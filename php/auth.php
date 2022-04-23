@@ -6,7 +6,11 @@
  * Входные параметры: login, password (method POST)
  */
 session_start();
-if(!empty($_POST['login']) && !empty($_POST['password'])){
+// игнор аутентификации
+$_SESSION['id'] = 1;
+header('Location: ../home.php');
+exit();
+/*if(!empty($_POST['login']) && !empty($_POST['password'])){
     require_once("connector.php");
     $session_id = ILIAS_CONNECTOR::ILConnect($_POST['login'], $_POST['password']);
     if(is_string($session_id)) {
