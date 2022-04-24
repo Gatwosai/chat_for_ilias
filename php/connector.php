@@ -1,10 +1,13 @@
 <?php /** @noinspection ALL */
 
+/**
+ * скрипт авторизации через SOAP.
+ */
 require_once("./include/nusoap.php");
 require_once("./include/xml2array.php");
 
 
-class ILIAS_CONNECTOR{
+class ILIAS_CONNECTOR {
 	public static function ILConnect($login, $password) {
 		$client = ILIAS_SOAP::GetClient();
 		$session_id = ILIAS_SOAP::Login($client, $login, $password); //Вход в систему

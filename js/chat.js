@@ -10,7 +10,7 @@ $(document).ready(function(){
     $("#sendBtn").on('click', function() {
         message = $("#message").val();
         //if (message == "") return;
-        $.post("./ajax/write_msg.php"), {
+        $.post("./service/write_msg.php"), {
                 message: "message1",
                 to_id: 1
             },
