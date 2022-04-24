@@ -1,6 +1,6 @@
 <?php
 /**
- * Скрипт подключения к базе данных.
+ * Класс подключения к базе данных.
  * server name = localhost;
  * user name = iliasuser;
  * password = '123';
