@@ -5,11 +5,11 @@
  * Client ID = test1
  * Входные параметры: login, password (method POST)
  */
-session_start();
+return 0;
+//session_start();
 // игнор аутентификации
-$_SESSION['id'] = 1;
-header('Location: ../home.php');
-exit();
+//header('Location: ../home.php');
+//exit();
 /*
 if(!empty($_POST['login']) && !empty($_POST['password'])){
     require_once("connector.php");

@@ -20,8 +20,12 @@ class Database {
         }
     }
 
-    function addMessage() {
-
+    function addMessage($usr_id, $chat_id, $content) {
+        $sql = "INSERT INTO 
+	            chats (from_id, to_id, message) 
+	            VALUES (?, ?, ?)";
+	    $stmt = $connector->prepare($sql);
+	    $res  = $stmt->execute([$from_id, $to_id, $message]);
     }
 
     function addChat() {
