@@ -1,17 +1,3 @@
-function auth() {
-    const promise =  axios({
-        method: 'post',
-        url: 'server/auth.php',
-        constdata: {
-            login: "login",
-            password: "password",
-        }
-    })
-    return promise.then((response) => {
-        return (response.data)
-    })
-}
-
 /*function addMessage(usr_id, chat_id, content, datetime, is_read, is_file) {
     axios({
         method: 'post',
@@ -32,12 +18,11 @@ function auth(login, password) {
         method: 'post',
         url: 'server/auth.php',
         constdata: {
-            login: login,
-            password: password,
+            login: "login",
+            password: "password",
         }
     })
     return promise.then((response) => {
         return (response)
     })
-
 }

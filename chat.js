@@ -35,8 +35,8 @@ if (false) {
 // Страница входа
 const textAreaLogin = document.querySelector("#login")
 const textAreaPassword = document.querySelector("#password")
-const btnAuth = document.querySelector("#loginForm")
-btnAuth.addEventListener("submit", () => {
+const btnAuth = document.querySelector("#btnAuth")
+btnAuth.addEventListener("click", () => {
     const promise = auth(textAreaLogin.value, textAreaPassword.value)
     promise.then((response) => {
         sessionStorage.setItem("id", response.data)
