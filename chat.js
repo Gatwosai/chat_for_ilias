@@ -32,18 +32,16 @@ if (false) {
     })
 }
 
-
 // Страница входа
 const textAreaLogin = document.querySelector("#login")
 const textAreaPassword = document.querySelector("#password")
-const btnAuth = document.querySelector("#btnAuth")
-btnAuth.addEventListener("click", () => {
-    //debugger
-    axios.post("https://repetitora.net/api/JS/Tasks", {
-        widgetId: 228,
+const btnAuth = document.querySelector("#loginForm")
+btnAuth.addEventListener("submit", () => {
+    const promise = auth(textAreaLogin.value, textAreaPassword.value)
+    promise.then((response) => {
+        sessionStorage.setItem("id", response.data)
+        if (response.status == 200) {
+            window.location.href = 'home.php'
+        }
     })
-    //const promise = auth(textAreaLogin.value, textAreaPassword.value)
-    // Страницаpromise.then(() => {
-        //sessionStorage.setItem("id", "1")
-    //})
 })

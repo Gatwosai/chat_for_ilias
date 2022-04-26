@@ -1,3 +1,17 @@
+function auth() {
+    const promise =  axios({
+        method: 'post',
+        url: 'server/auth.php',
+        constdata: {
+            login: "login",
+            password: "password",
+        }
+    })
+    return promise.then((response) => {
+        return (response.data)
+    })
+}
+
 /*function addMessage(usr_id, chat_id, content, datetime, is_read, is_file) {
     axios({
         method: 'post',
@@ -11,21 +25,19 @@
             is_file: is_file,
         }
     })
-}
+}*/
 
 function auth(login, password) {
-    //const promise1 = axios.get('./server/auth.php?id=1')
-    return axios({
-        method: 'get',
-        url: 'https://repetitora.net/api/JS/Tasks?widgetId=228',
-        //constdata: {
-            //login: login,
-            //password: password,
-        //}
+    const promise =  axios({
+        method: 'post',
+        url: 'server/auth.php',
+        constdata: {
+            login: login,
+            password: password,
+        }
     })
-    .then(function(response) {
-        console.log(response.data)
-        return response.data
+    return promise.then((response) => {
+        return (response)
     })
 
-}*/
+}
