@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<title>Chat</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+		<link href="./bootstrap5/css/bootstrap.css" rel="stylesheet">
+		<script src="service.js"></script>
+		<script src="check_auth.js"></script>
+		<!--<link href="./css/home.css" rel="stylesheet">-->
+		<style>html, body {height: 100%;}</style>
+
+	</head>
+	<body>
+		<div class="container-fluid h-100">
+			<div class="row h-100">
+				<div class="col-4 card rounded-0">
+					<div class="row card-header p-0">
+						<div class="col-4">
+							<div class="dropdown">
+								<button type="button" class="btn shadow-none" data-bs-toggle="dropdown"
+									aria-expanded="false">
+									<span<i class="fas fa-thin fa-bars"></i></span>
+								</button>
+								<ul class="dropdown-menu">
+									<li><a class="dropdown-item" href="#">Действие</a></li>
+									<li><a class="dropdown-item" href="#">Другое действие</a></li>
+									<li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="col modal-dialog-centered">getUserName</div>
+					</div>
+					<div class="card-body">
+
+					</div>
+					<div class="card-footer"></div>
+				</div>
+				<div class="col-8 card rounded-0">
+					<div class="row card-header p-0">
+						<div class="col-10 modal-dialog-centered">
+							<!--<img src="./assets/icons/teacher.png" class="col-2 float-start rounded-circle">-->
+							getUserName
+						</div>
+						<div class="col-2 dropdown p-0">
+							<button type="button" class="btn shadow-none float-end" data-bs-toggle="dropdown" aria-expanded="false">
+								<span<i class="fas fa-ellipsis-v"></i></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="#">Действие</a></li>
+								<li><a class="dropdown-item" href="#">Другое действие</a></li>
+								<li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item" href="#">Выйти</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="row card-body bg-black">
+						
+					</div>
+					<div class="row card-footer-fluid shadow p-0">
+						<div class="row input-group-fluid p-0">
+							<div class="col-1">
+								<button class="btn shadow-none" type="button"><i class="fas fa-paperclip"></i></button>
+							</div>
+							<div class="col-10 p-0">
+								<input class="form-control shadow-none border-0" type="text" placeholder="" aria-label="Пример текста с двумя кнопками">
+							</div>
+							<div class="col-1 p-0">
+								<button class="btn shadow-none pt-6 pe-0 pb-6 ps-0 float-end" type="button"><i class="fas fa-location-arrow"></i></button>
+							</div>
+							
+							
+							
+						</div>
+					</div>
+						
+					
+				</div>
+			</div>
+		</div>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+		<script src="./bootstrap5/js/bootstrap.js"></script>
+		<script src="chat.js"></script>
+	</body>
+</html>

@@ -18,8 +18,8 @@ function auth(login, password) {
         method: 'post',
         url: 'server/auth.php',
         constdata: {
-            login: "login",
-            password: "password",
+            login: login,
+            password: password,
         }
     })
     return promise.then((response) => {

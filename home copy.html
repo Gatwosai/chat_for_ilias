@@ -1,26 +1,22 @@
-<?php
-	/*session_start();
-	if(!isset($_SESSION['id'])){
-		header("Location: index.php");
-		exit;
-	}*/
-?>
 <!DOCTYPE html>
 <html>
 	<head>
 
 		<title>Chat</title>
+		<meta charset="utf-8">
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 		<link href="./assets/dist/css/bootstrap.min.css" rel="stylesheet">
 		<script src="./assets/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="service.js"></script>
+		<script src="check_auth.js"></script>
 		<link href="./css/home.css" rel="stylesheet">
 
 	</head>
 	<body>
 
-	<div class="container-fluid h-100">
+	<div class="container-fluid h-100 bg-white">
 			<div class="row justify-content-center h-100">
 				<div class="row col-md-4 col-xl-3 chat">
 					<div class="card mb-md-2 contacts_card">
@@ -65,14 +61,19 @@
 									<p>7 Messages</p>
 								</div>
 							</div>
-							<span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
-							<div class="action_menu">
-								<ul>
-									<li><i class="fas fa-user-circle"></i> View profile</li>
-									<li><i class="fas fa-users"></i> Add to close friends</li>
-									<li><i class="fas fa-plus"></i> Add to group</li>
-									<li><i class="fas fa-ban"></i> Block</li>
-									<li><a href="./php/logout.php" class="btn btn-dark">Logout</a>
+							<div class="dropdown row col-md-1 col-xl-1 d-flex bd-highlight">
+								<button type="button" class="btn" data-bs-toggle="dropdown"
+									aria-expanded="false">
+									<span<i class="fas fa-ellipsis-v"></i></span>
+								</button>
+								<ul class="dropdown-menu dropdown-menu-dark">
+									<li><a class="dropdown-item" href="#">Действие</a></li>
+									<li><a class="dropdown-item" href="#">Другое действие</a></li>
+									<li><a class="dropdown-item" href="#">Что-то еще здесь</a></li>
+									<li>
+										<hr class="dropdown-divider">
+									</li>
+									<li><a class="dropdown-item" href="#">Выйти</a></li>
 								</ul>
 							</div>
 						</div>
@@ -91,8 +92,8 @@
 				</div>
 			</div>
 		</div>
+		<script src="chat.js"></script>
+		
 
-		<script src="./service.js"></script>
-		<script src="./chat.js"></script>
 	</body>
 </html>
