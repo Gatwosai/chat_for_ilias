@@ -5,6 +5,10 @@
  * Client ID = test1
  * Входные параметры: login, password (method POST)
  */
+//require_once("class.db.php");
+//$db = new Database("localhost", "iliasuser", "123", "chat");
+//echo $db.connector->addMessage(1, 1, 123, date(), false, false);
+$data = json_decode(file_get_contents("php://input"), true);
 $id = 228;
 if (false) {
     http_response_code(401);
