@@ -10,15 +10,15 @@
 		<link href="./bootstrap5/css/bootstrap.css" rel="stylesheet">
 		<script src="service.js"></script>
 		<script src="check_auth.js"></script>
-		<!--<link href="./css/home.css" rel="stylesheet">-->
+		<link href="./css/home.css" rel="stylesheet">
 		<style>html, body {height: 100%;}</style>
 
 	</head>
 	<body>
 		<div class="container-fluid h-100">
 			<div class="row h-100">
-				<div class="col-4 card rounded-0">
-					<div class="row card-header p-0">
+				<div class="col-4 card rounded-0 p-0">
+					<div class="row card-header p-0 bg-transparent">
 						<div class="col-4">
 							<div class="dropdown">
 								<button type="button" class="btn shadow-none" data-bs-toggle="dropdown"
@@ -34,18 +34,24 @@
 						</div>
 						<div class="col modal-dialog-centered">getUserName</div>
 					</div>
-					<div class="card-body">
-
+					<div class="row card-body">
+						<div class="col-4">
+							<img src="./assets/icons/student.jpg" class="col-12 rounded-circle">
+							<span class="online_icon"></span>
+						</div>
+						<div class="col">
+							<span>getUserName</span>
+							getText
+						</div>
 					</div>
-					<div class="card-footer"></div>
 				</div>
-				<div class="col-8 card rounded-0">
-					<div class="row card-header p-0">
+				<div class="col-8 card rounded-0 p-0">
+					<div class="row card-header ps-24 pe-0 pb-0 pt-0 bg-transparent">
 						<div class="col-10 modal-dialog-centered">
 							<!--<img src="./assets/icons/teacher.png" class="col-2 float-start rounded-circle">-->
 							getUserName
 						</div>
-						<div class="col-2 dropdown p-0">
+						<div class="col-2 dropdown">
 							<button type="button" class="btn shadow-none float-end" data-bs-toggle="dropdown" aria-expanded="false">
 								<span<i class="fas fa-ellipsis-v"></i></span>
 							</button>
@@ -60,11 +66,73 @@
 							</ul>
 						</div>
 					</div>
-					<div class="row card-body bg-black">
-						
+					<div class="card-body bg-secondary">
+						<div class="d-flex justify-content-start mb-4">
+							<div class="img_cont_msg">
+								<img src="./assets/icons/student.jpg" class="rounded-circle user_img_msg">
+							</div>
+							<div class="msg_container">
+								Здравствуйте, Алексей Владимирович. У меня вопрос по поводу лабораторной работы.
+								<span class="msg_time">8:40, Сегодня</span>
+							</div>
+						</div>
+						<div class="d-flex justify-content-end mb-4">
+							<div class="msg_container_send">
+								Здравствуйте, Пётр. Все ответы на типичные вопросы я подготовил в файле.
+								<span class="msg_time_send">8:55, Сегодня</span>
+							</div>
+							<div class="img_cont_msg">
+								<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
+							</div>
+						</div>
+						<div class="d-flex justify-content-end mb-4">
+							<div class="msg_container_send">
+								картинка
+								<span class="msg_time_send">8:55, Сегодня</span>
+							</div>
+							<div class="img_cont_msg">
+								<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
+							</div>
+						</div>
+						<div class="d-flex justify-content-start mb-4">
+							<div class="img_cont_msg">
+								<img src="./assets/icons/student.jpg" class="rounded-circle user_img_msg">
+							</div>
+							<div class="msg_container">
+								Я нашёл ответ на свой вопрос, спасибо.
+								<span class="msg_time">9:00, Сегодня</span>
+							</div>
+						</div>
+						<div class="d-flex justify-content-end mb-4">
+							<div class="msg_container_send">
+								Не забудьте, что скоро у Вас защита диплома.
+								<span class="msg_time_send">9:05, Сегодня</span>
+							</div>
+							<div class="img_cont_msg">
+								<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
+							</div>
+						</div>
+						<div class="d-flex justify-content-start mb-4">
+							<div class="img_cont_msg">
+								<img src="./assets/icons/student.jpg" class="rounded-circle user_img_msg">
+							</div>
+							<div class="msg_container">
+								Да я успею доделать его, там еще преддипломная практика, время есть!
+								<span class="msg_time">9:07, Сегодня</span>
+							</div>
+						</div>
+						<div class="d-flex justify-content-end mb-4">
+							<div class="msg_container_send">
+								Ага, все вы так говорите.
+								<span class="msg_time_send">9:10, Сегодня</span>
+							</div>
+							<div class="img_cont_msg">
+								<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
+							</div>
+						</div>
 					</div>
-					<div class="row card-footer-fluid shadow p-0">
-						<div class="row input-group-fluid p-0">
+					<div class="row card-footer-fluid p-0">
+						<div class="row input-group-fluid pe-0 pt-0 pb-0 ps-12">
 							<div class="col-1">
 								<button class="btn shadow-none" type="button"><i class="fas fa-paperclip"></i></button>
 							</div>
@@ -72,11 +140,8 @@
 								<input class="form-control shadow-none border-0" type="text" placeholder="" aria-label="Пример текста с двумя кнопками">
 							</div>
 							<div class="col-1 p-0">
-								<button class="btn shadow-none pt-6 pe-0 pb-6 ps-0 float-end" type="button"><i class="fas fa-location-arrow"></i></button>
+								<button class="btn shadow-none pt-6 pe-12 pb-6 ps-0 float-end" id="btnSend" type="button"><i class="fas fa-location-arrow"></i></button>
 							</div>
-							
-							
-							
 						</div>
 					</div>
 						
