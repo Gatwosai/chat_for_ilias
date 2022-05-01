@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Скрипт для добавления нового сообщения в базу данных
  * с применением ajax.
@@ -25,7 +26,9 @@ $is_read = $data['is_read'];
 $is_file = $data['is_file'];
 require_once("class.db.php");
 $db = new Database($srv, $usr, $pass, $dbName);
-echo $db->addMessage($usr_id, $chat_id, $content, $datetime, $is_read, $is_file);
-
-
-
+$message = $db->addMessage($usr_id, $chat_id, $content, $datetime, $is_read, $is_file);
+?>
+<p class="rtext align-self-end border rounded p-2 mb-1">
+    <?= $message ?>
+    <small class="messageArea"><?= 1 ?></small>
+</p>
