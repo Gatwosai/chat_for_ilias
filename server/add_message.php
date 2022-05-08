@@ -28,7 +28,3 @@ require_once("class.db.php");
 $db = new Database($srv, $usr, $pass, $dbName);
 $message = $db->addMessage($usr_id, $chat_id, $content, $datetime, $is_read, $is_file);
 ?>
-<p class="rtext align-self-end border rounded p-2 mb-1">
-    <?= $message ?>
-    <small class="messageArea"><?= 1 ?></small>
-</p>

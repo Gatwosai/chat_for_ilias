@@ -23,13 +23,20 @@ sendBtn.addEventListener("click", () => {
     const promise = addMessage(1, 1, messageIn.value, now, 0, 0)
     promise.then((response) => {
         console.log(response)
-        mess = document.createElement('div')
-        
+        mess = document.createElement('div')      
         mess.innerHTML = (`<div class='d-flex justify-content-end mb-4'>\
         <div class='msg_container_send'>\
         ${messageIn.value}\
         <span class='msg_time_send'>8:55, Сегодня</span></div>\
         <div class='img_cont_msg'><img src='./assets/icons/teacher.png' class='rounded-circle user_img_msg'></div></div>`)
         messageArea.appendChild(mess)
+    })
+})
+const contacts = document.querySelector(".contacts")
+contacts.addEventListener("click", () => {
+    const promise = getMessages()
+    promise.then((response) => {
+        console.log(response)
+        messageArea.innerHTML = response.data
     })
 })

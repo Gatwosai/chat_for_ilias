@@ -3,13 +3,23 @@ function addMessage(usr_id, chat_id, content, datetime, is_read, is_file) {
         method: 'post',
         url: 'server/add_message.php',
         data: {
-            usr_id: '1',
+            usr_id: usr_id,
             chat_id: chat_id,
             content: content,
             datetime: datetime,
             is_read: is_read,
             is_file: is_file,
         }
+    })
+    return promise.then((response) => {
+        return response
+    })
+}
+
+function getMessages() {
+    const promise = axios({
+        method: 'get',
+        url: 'server/get_messages.php'
     })
     return promise.then((response) => {
         return response

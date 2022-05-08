@@ -56,3 +56,11 @@ html {
 	position: relative;
 	overflow: visible;
 }
+
+.messageArea {
+	overflow-y: auto;
+}
+
+.card{
+	height: 100%;
+}

@@ -29,6 +29,24 @@ class Database {
         return $res;
     }
 
+    function getMessages() {
+        $chat_id = 1;
+        $sql = "SELECT usr_id, content
+	            FROM message  
+	            WHERE chat_id=?";
+        
+	    $stmt = $this->connector->prepare($sql);
+	    $stmt->execute([$chat_id]);
+        $res = $stmt->fetchAll();
+        //foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $v) {
+            //$res[] = $v['content'];
+            //echo $v['content'];
+            //echo ' || ';
+        //}
+        //$res = $stmt->fetchAll();
+        return $res;
+    }
+
     function test($number) {
         $sql = "INSERT INTO
                 test (test)
