@@ -38,12 +38,6 @@ class Database {
 	    $stmt = $this->connector->prepare($sql);
 	    $stmt->execute([$chat_id]);
         $res = $stmt->fetchAll();
-        //foreach(new RecursiveArrayIterator($stmt->fetchAll()) as $v) {
-            //$res[] = $v['content'];
-            //echo $v['content'];
-            //echo ' || ';
-        //}
-        //$res = $stmt->fetchAll();
         return $res;
     }
 
