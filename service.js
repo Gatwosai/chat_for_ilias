@@ -26,6 +26,17 @@ function getMessages() {
     })
 }
 
+function getChats() {
+    const promise = axios({
+        method: 'get',
+        //FIXME usr_id is param
+        url: 'server/get_chats.php?usr_id=1',
+    })
+    return promise.then((response) => {
+        return response
+    })
+}
+
 function auth(login, password) {
     const promise =  axios({
         method: 'post',
@@ -36,6 +47,6 @@ function auth(login, password) {
         }
     })
     return promise.then((response) => {
-        return (response)
+        return response
     })
 }

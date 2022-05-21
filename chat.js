@@ -13,6 +13,25 @@ menuBtn2.addEventListener("click", () => {
     //addMessage()
 })
 */
+const chats_card = document.querySelector(".contacts")
+const promise = getChats();
+promise.then((response) => {
+    //FIXME
+    console.log(response)
+    response.data['name'].forEach((name) => {
+        chat = document.createElement('div')
+        chat.innerHTML = (
+        `<div class="col-4">\
+	    <img src="./assets/icons/student.jpg" class="col-12 rounded-circle">\
+	    <span class="online_icon"></span>\
+	    </div>\
+	    <div class="col">\
+	    <span>${name['name']}</span>\
+	    getText\
+	    </div>`)
+	    chats_card.appendChild(chat)
+    })
+})
 
 const messageArea = document.querySelector(".messageArea")
 const img1 = document.querySelector(".img1")
@@ -22,6 +41,7 @@ sendBtn.addEventListener("click", () => {
     const now = new Date().toLocaleString("ru-RU").replace(",", "")
     const promise = addMessage(1, 1, messageIn.value, now, 0, 0)
     promise.then((response) => {
+        //FIXME
         console.log(response)
         mess = document.createElement('div')      
         mess.innerHTML = (`<div class='d-flex justify-content-end mb-4'>\

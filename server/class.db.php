@@ -21,22 +21,41 @@ class Database {
 
     function addMessage($usr_id, $chat_id, $content, $datetime, $is_read, $is_file) {
         $sql = "INSERT INTO 
-	            message (usr_id, chat_id, content, datetime, is_read, is_file) 
-	            VALUES (?, ?, ?, STR_TO_DATE(?, '%d.%m.%Y %H:%i:%s'), ?, ?)";
-        
-	    $stmt = $this->connector->prepare($sql);
-	    $res  = $stmt->execute([$usr_id, $chat_id, $content, $datetime, $is_read, $is_file]);
+	        message (usr_id, chat_id, content, datetime, is_read, is_file) 
+	        VALUES (?, ?, ?, STR_TO_DATE(?, '%d.%m.%Y %H:%i:%s'), ?, ?)";
+	$stmt = $this->connector->prepare($sql);
+	$res  = $stmt->execute([$usr_id, $chat_id, $content, $datetime,        
+	                        $is_read, $is_file]);
         return $res;
     }
 
     function getMessages() {
+        // FIXME chat id is param
         $chat_id = 1;
         $sql = "SELECT usr_id, content
-	            FROM message  
-	            WHERE chat_id=?";
-        
-	    $stmt = $this->connector->prepare($sql);
-	    $stmt->execute([$chat_id]);
+	        FROM message  
+	        WHERE chat_id=?";
+	$stmt = $this->connector->prepare($sql);
+	$stmt->execute([$chat_id]);
+        $res = $stmt->fetchAll();
+        return $res;
+    }
+    
+    function getChats() {
+        // FIXME usr id is param
+        $usr_id = 1;
+        $sql = "SELECT chat_id
+                FROM Chat_users
+                WHERE usr_id=?";
+        $stmt = $this->connector->prepare($sql);
+        $stmt->execute([$usr_id]);
+        $chat_id_arr = $stmt->fetchAll();
+        $sql = "SELECT name
+                FROM Chat
+                WHERE chat_id
+                IN (?, ?)";
+        $stmt = $this->connector->prepare($sql);
+        $stmt->execute([2, 3]);
         $res = $stmt->fetchAll();
         return $res;
     }
