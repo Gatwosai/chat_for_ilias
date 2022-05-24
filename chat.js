@@ -33,8 +33,8 @@ sendBtn.addEventListener("click", () => {
     })
 })
 
-const chats_card = document.querySelector(".contacts")
-chats_card.addEventListener("click", () => {
+const contacts = document.querySelector(".contacts")
+function getMessagesFromDB() {
     const promise = getMessages()
     promise.then((response) => {
         //FIXME
@@ -71,9 +71,9 @@ chats_card.addEventListener("click", () => {
             }
             messageArea.appendChild(div)
         })
-        
     })
-})
+}
+
 const promise = getChats();
 promise.then((response) => {
     //FIXME
@@ -81,13 +81,13 @@ promise.then((response) => {
     response.data['name'].forEach((name) => {
         chat = document.createElement('div')
         chat.innerHTML = (
-        `<li>
+        `<li type=button onclick=getMessagesFromDB()>
 		    <div class="d-flex bd-highlight">
 		    <div class="img_cont">
 		    <img src="./assets/icons/group.png" class="rounded-circle user_img">
 			</div>
 		    <div class="user_info">
-		    <span>ИВТ-82</span>
+		    <span>${name['name']}</span>
 		    <p>Егор Блинов: пара в 13:35</p>
 		    </div>
 		    </div>
@@ -104,7 +104,7 @@ promise.then((response) => {
 	        </div>
 	    </li>`*/
 	    )
-	    chats_card.appendChild(chat)
+	    contacts.appendChild(chat)
     })
 })
 
