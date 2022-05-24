@@ -81,14 +81,29 @@ promise.then((response) => {
     response.data['name'].forEach((name) => {
         chat = document.createElement('div')
         chat.innerHTML = (
-        `<div class="col-4">\
-	    <img src="./assets/icons/student.jpg" class="col-12 rounded-circle">\
-	    <span class="online_icon"></span>\
-	    </div>\
-	    <div class="col">\
-	    <span>${name['name']}</span>\
-	    getText\
-	    </div>`)
+        `<li>
+		    <div class="d-flex bd-highlight">
+		    <div class="img_cont">
+		    <img src="./assets/icons/group.png" class="rounded-circle user_img">
+			</div>
+		    <div class="user_info">
+		    <span>ИВТ-82</span>
+		    <p>Егор Блинов: пара в 13:35</p>
+		    </div>
+		    </div>
+		</li>`
+        /*`<li>
+            <div class='col-4'>
+	        <img src='./assets/icons/student.jpg' 
+	        class='col-12 user_img rounded-circle'>
+	        <span class='online_icon'></span>
+	        </div>
+	        <div class='user_info'>
+	        <span>${name['name']}</span>
+	        getText
+	        </div>
+	    </li>`*/
+	    )
 	    chats_card.appendChild(chat)
     })
 })

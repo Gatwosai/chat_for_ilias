@@ -4,6 +4,29 @@ html {
 	overflow: hidden;
 }
 
+.user_img {
+    height: 70px;
+    width: 70px;
+}
+
+.user_info {
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: 15px;
+}
+
+.contacts li{
+    width: 100% !important;
+    padding: 5px 10px;
+    margin-bottom: 15px !important;
+}
+
+.img_cont{
+    position: relative;
+    height: 70px;
+    width: 70px;
+}
+
 .user_img_msg {
 	height: 40px;
 	width: 40px;
@@ -12,6 +35,20 @@ html {
 .img_cont_msg {
 	height: 40px;
 	width: 40px;
+}
+
+.contacts {
+    padding:  0rem 0 !important;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+
+.input-group{
+    padding-left: 24px;
+}
+.search:focus{
+    box-shadow: none !important;
+    outline: 0px !important;
 }
 
 .msg_container {
