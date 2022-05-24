@@ -13,26 +13,6 @@ menuBtn2.addEventListener("click", () => {
     //addMessage()
 })
 */
-const chats_card = document.querySelector(".contacts")
-const promise = getChats();
-promise.then((response) => {
-    //FIXME
-    console.log(response)
-    response.data['name'].forEach((name) => {
-        chat = document.createElement('div')
-        chat.innerHTML = (
-        `<div class="col-4">\
-	    <img src="./assets/icons/student.jpg" class="col-12 rounded-circle">\
-	    <span class="online_icon"></span>\
-	    </div>\
-	    <div class="col">\
-	    <span>${name['name']}</span>\
-	    getText\
-	    </div>`)
-	    chats_card.appendChild(chat)
-    })
-})
-
 const messageArea = document.querySelector(".messageArea")
 const img1 = document.querySelector(".img1")
 const messageIn = document.querySelector("#messageIn")
@@ -52,11 +32,64 @@ sendBtn.addEventListener("click", () => {
         messageArea.appendChild(mess)
     })
 })
-const contacts = document.querySelector(".contacts")
-contacts.addEventListener("click", () => {
+
+const chats_card = document.querySelector(".contacts")
+chats_card.addEventListener("click", () => {
     const promise = getMessages()
     promise.then((response) => {
+        //FIXME
         console.log(response)
-        messageArea.innerHTML = response.data
+        messageArea.innerHTML = ''
+        response.data['messages'].forEach((message) => {
+            div = document.createElement('div')
+            //FIXME get usr_id from sessionstore
+            if (message['usr_id'] == 1) {
+                div.innerHTML = (
+                    `<div class='d-flex justify-content-end mb-4'>\
+                    <div class='msg_container_send'>\
+                    ${message['content']}\
+                    <span class='msg_time_send'>8:55, Сегодня</span></div>\
+                    <div class='img_cont_msg'>
+                    <img src='./assets/icons/teacher.png'     
+                    class='rounded-circle user_img_msg'></div>
+                    </div>`
+                )
+            }
+            else {
+                div.innerHTML = (
+                    `<div class='d-flex justify-content-start mb-4'>
+                    <div class='img_cont_msg'>
+		            <img src='./assets/icons/student.jpg'
+		            class='rounded-circle user_img_msg'>
+		            </div>
+                    <div class='msg_container'>
+                    ${message['content']}
+                    <span class='msg_time'>8:55, Сегодня</span></div>
+                    </div>
+                    </div>`
+                )
+            }
+            messageArea.appendChild(div)
+        })
+        
     })
 })
+const promise = getChats();
+promise.then((response) => {
+    //FIXME
+    console.log(response)
+    response.data['name'].forEach((name) => {
+        chat = document.createElement('div')
+        chat.innerHTML = (
+        `<div class="col-4">\
+	    <img src="./assets/icons/student.jpg" class="col-12 rounded-circle">\
+	    <span class="online_icon"></span>\
+	    </div>\
+	    <div class="col">\
+	    <span>${name['name']}</span>\
+	    getText\
+	    </div>`)
+	    chats_card.appendChild(chat)
+    })
+})
+

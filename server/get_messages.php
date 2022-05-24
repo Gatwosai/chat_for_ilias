@@ -11,7 +11,10 @@ $dbName = "chat";
 require_once("class.db.php");
 $db = new Database($srv, $usr, $pass, $dbName);
 $messages = $db->getMessages();
-foreach(new RecursiveArrayIterator($messages) as $message) {
+$data['messages'] = $messages;
+header('Content-Type: application/json');
+echo json_encode($data);
+/*foreach(new RecursiveArrayIterator($messages) as $message) {
     $content = $message['content'];
     if ($message['usr_id'] == 1) {
         echo "<div class='d-flex justify-content-end mb-4'>
@@ -33,4 +36,4 @@ foreach(new RecursiveArrayIterator($messages) as $message) {
         </div>
         </div>";
     }
-}
+}*/

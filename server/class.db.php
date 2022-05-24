@@ -23,9 +23,9 @@ class Database {
         $sql = "INSERT INTO 
 	        message (usr_id, chat_id, content, datetime, is_read, is_file) 
 	        VALUES (?, ?, ?, STR_TO_DATE(?, '%d.%m.%Y %H:%i:%s'), ?, ?)";
-	$stmt = $this->connector->prepare($sql);
-	$res  = $stmt->execute([$usr_id, $chat_id, $content, $datetime,        
-	                        $is_read, $is_file]);
+	    $stmt = $this->connector->prepare($sql);
+	    $res  = $stmt->execute([$usr_id, $chat_id, $content, $datetime,        
+	                            $is_read, $is_file]);
         return $res;
     }
 
@@ -33,10 +33,10 @@ class Database {
         // FIXME chat id is param
         $chat_id = 1;
         $sql = "SELECT usr_id, content
-	        FROM message  
-	        WHERE chat_id=?";
-	$stmt = $this->connector->prepare($sql);
-	$stmt->execute([$chat_id]);
+	            FROM message  
+	            WHERE chat_id=?";
+	    $stmt = $this->connector->prepare($sql);
+	    $stmt->execute([$chat_id]);
         $res = $stmt->fetchAll();
         return $res;
     }
