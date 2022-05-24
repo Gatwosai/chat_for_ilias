@@ -50,14 +50,29 @@ class Database {
         $stmt = $this->connector->prepare($sql);
         $stmt->execute([$usr_id]);
         $chat_id_arr = $stmt->fetchAll();
+        $name = $chat_id_arr['name'];
+        $in  = str_repeat('?,', count($name) - 1).'?';
         $sql = "SELECT name
                 FROM Chat
                 WHERE chat_id
-                IN (?, ?)";
+                IN (2, 3, 4, 5)"; //FIXME
         $stmt = $this->connector->prepare($sql);
-        $stmt->execute([2, 3]);
+        $stmt->execute($name);
         $res = $stmt->fetchAll();
         return $res;
+    }
+    
+    function searchUser($usr_this, $key) {
+        $sql = "SELECT firstname, lastname
+                FROM usr_data
+                WHERE login LIKE '$key%'
+                OR firstname LIKE '$key%'
+                OR lastname LIKE '$key%'";
+        //FIXME mb for first+last name
+        $stmt = $this->connector->prepare($sql);
+        $stmt->execute();
+        $contacts = $stmt->fetchAll();
+        return $contacts;
     }
 
     function test($number) {
@@ -69,7 +84,12 @@ class Database {
         return $res;
     }
 
-    function addChat() {
-
+    function addChat($creator_id, $name) {
+        $sql = "INSERT INTO
+                Chat (creator_id, name)
+                VALUES (?, ?)";
+        $stmt = $this->connector->prepare($sql);
+        $res = $stmt->execute([$creator_id, $name]);
+        return $res;
     }
 }

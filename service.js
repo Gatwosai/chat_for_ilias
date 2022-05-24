@@ -37,6 +37,26 @@ function getChats() {
     })
 }
 
+function searchUser(usr_id, key) {
+    const promise = axios({
+        method: 'get',
+        url: `server/search_user.php?usr_id=${usr_id}&key=${key}`
+    })
+    return promise.then((response) => {
+        return response
+    })
+}
+
+function addChat(id, name) {
+    const promise = axios({
+        method: 'get',
+        url: `server/add_chat.php?creator_id=${id}&name=${name}`
+    })
+    return promise.then((response) => {
+        return response
+    })
+}
+
 function auth(login, password) {
     const promise =  axios({
         method: 'post',

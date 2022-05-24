@@ -14,7 +14,6 @@ menuBtn2.addEventListener("click", () => {
 })
 */
 const messageArea = document.querySelector(".messageArea")
-const img1 = document.querySelector(".img1")
 const messageIn = document.querySelector("#messageIn")
 const sendBtn = document.querySelector("#sendBtn")
 sendBtn.addEventListener("click", () => {
@@ -74,8 +73,7 @@ function getMessagesFromDB() {
     })
 }
 
-const promise = getChats();
-promise.then((response) => {
+function updateChats(response) {
     //FIXME
     console.log(response)
     response.data['name'].forEach((name) => {
@@ -105,6 +103,50 @@ promise.then((response) => {
 	    </li>`*/
 	    )
 	    contacts.appendChild(chat)
+    })
+}
+const promise = getChats();
+promise.then((response) => {
+    updateChats(response)
+})
+
+const search = document.querySelector(".search")
+search.addEventListener("input", () => {
+    contacts.innerHTML = ''
+    usr_id = 1 //FIXME
+    const promise = searchUser(usr_id, search.value)
+    promise.then((response) => {
+        //FIXME
+        console.log(response)
+        response.data['search'].forEach((name) => {
+            div = document.createElement('div')
+            div.innerHTML = ( 
+            `<li type=button>
+		        <div class="d-flex bd-highlight">
+		        <div class="img_cont">
+		        <img src="./assets/icons/group.png" class="rounded-circle user_img">
+			    </div>
+		        <div class="user_info">
+		        <span>${name['firstname']} ${name['lastname']}</span>
+		        <p>Егор Блинов: пара в 13:35</p>
+		        </div>
+		        </div>
+		    </li>`
+		    )
+		    contacts.appendChild(div)
+        })
+    })
+})
+
+const create_chat = document.querySelector(".create_chat")
+create_chat.addEventListener("click", () => {
+    console.log("123")
+    // FIXME
+    id = 1
+    name = prompt('Ввод названия чата', '');
+    const promise = addChat(id, name)
+    promise.then((response) => {
+        messageArea.innerHTML = ''
     })
 })
 
