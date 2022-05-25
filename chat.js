@@ -33,13 +33,13 @@ sendBtn.addEventListener("click", () => {
 })
 
 const contacts = document.querySelector(".contacts")
-function getMessagesFromDB() {
-    const promise = getMessages()
+function getMessagesFromDB(chat_id) {
+    const promise = getMessages(chat_id)
     promise.then((response) => {
         //FIXME
         console.log(response)
         messageArea.innerHTML = ''
-        response.data['messages'].forEach((message) => {
+        response.data.forEach((message) => {
             div = document.createElement('div')
             //FIXME get usr_id from sessionstore
             if (message['usr_id'] == 1) {
@@ -76,33 +76,26 @@ function getMessagesFromDB() {
 function updateChats(response) {
     //FIXME
     console.log(response)
-    response.data.forEach((name) => {
-        chat = document.createElement('div')
-        chat.innerHTML = (
-        `<li type=button onclick=getMessagesFromDB()>
+    response.data.forEach((chat) => {
+        usr_id = 1; // FIXME
+        contact = document.createElement('div')
+        contact.innerHTML = (
+        `<li type=button>
 		    <div class="d-flex bd-highlight">
 		    <div class="img_cont">
 		    <img src="./assets/icons/group.png" class="rounded-circle user_img">
 			</div>
 		    <div class="user_info">
-		    <span>${name['name']}</span>
+		    <span>${chat['name']}</span>
 		    <p>Егор Блинов: пара в 13:35</p>
 		    </div>
 		    </div>
 		</li>`
-        /*`<li>
-            <div class='col-4'>
-	        <img src='./assets/icons/student.jpg' 
-	        class='col-12 user_img rounded-circle'>
-	        <span class='online_icon'></span>
-	        </div>
-	        <div class='user_info'>
-	        <span>${name['name']}</span>
-	        getText
-	        </div>
-	    </li>`*/
 	    )
-	    contacts.appendChild(chat)
+	    contacts.appendChild(contact)
+	    contact.addEventListener("click", () => {
+	        getMessagesFromDB(chat['chat_id'])
+	    })
     })
 }
 const promise = getChats();
@@ -118,6 +111,7 @@ search.addEventListener("input", () => {
     promise.then((response) => {
         //FIXME
         console.log(response)
+        //FIXME ['search']
         response.data['search'].forEach((name) => {
             div = document.createElement('div')
             div.innerHTML = ( 

@@ -16,10 +16,10 @@ function addMessage(usr_id, chat_id, content, datetime, is_read, is_file) {
     })
 }
 
-function getMessages() {
+function getMessages(chat_id) {
     const promise = axios({
         method: 'get',
-        url: 'server/get_messages.php'
+        url: `server/get_messages.php?chat_id=${chat_id}`
     })
     return promise.then((response) => {
         return response

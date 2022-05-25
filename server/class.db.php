@@ -29,15 +29,13 @@ class Database {
         return $res;
     }
 
-    function getMessages() {
-        // FIXME chat id is param
-        $chat_id = 1;
+    function getMessages($chat_id) {
         $sql = "SELECT usr_id, content
-	            FROM message  
+	            FROM message
 	            WHERE chat_id=?";
 	    $stmt = $this->connector->prepare($sql);
 	    $stmt->execute([$chat_id]);
-        $res = $stmt->fetchAll();
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $res;
     }
     
@@ -49,9 +47,9 @@ class Database {
                 WHERE usr_id=?";
         $stmt = $this->connector->prepare($sql);
         $stmt->execute([$usr_id]);
-        $chat_id_arr = $stmt->fetchAll(PDO::FETCH_COLUMN)
+        $chat_id_arr = $stmt->fetchAll(PDO::FETCH_COLUMN);
         $in  = str_repeat('?,', count($chat_id_arr) - 1).'?';
-        $sql = "SELECT name
+        $sql = "SELECT chat_id, name
                 FROM Chat
                 WHERE chat_id
                 IN ($in)";
