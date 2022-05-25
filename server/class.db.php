@@ -60,7 +60,8 @@ class Database {
     }
     
     function searchUser($usr_this, $key) {
-        $sql = "SELECT firstname, lastname
+        //FIXME for search not this id
+        $sql = "SELECT usr_id, firstname, lastname
                 FROM usr_data
                 WHERE login LIKE '$key%'
                 OR firstname LIKE '$key%'
@@ -68,7 +69,7 @@ class Database {
         //FIXME mb for first+last name
         $stmt = $this->connector->prepare($sql);
         $stmt->execute();
-        $contacts = $stmt->fetchAll();
+        $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $contacts;
     }
 

@@ -1,18 +1,3 @@
-//const textAreaMessage = document.querySelector("#message")
-
-/*const menu = document.querySelector(".action_menu_chat")
-const menuBtn = document.querySelector("#action_menu_btn_chat")
-menuBtn.addEventListener("click", () => {
-    menu.classList.toggle("action_menu_chat")
-    //addMessage()
-})
-const menu2 = document.querySelector(".action_menu")
-const menuBtn2 = document.querySelector("#action_menu_btn")
-menuBtn2.addEventListener("click", () => {
-    menu2.classList.toggle("action_menu")
-    //addMessage()
-})
-*/
 const messageArea = document.querySelector(".messageArea")
 const messageIn = document.querySelector("#messageIn")
 const sendBtn = document.querySelector("#sendBtn")
@@ -112,7 +97,7 @@ search.addEventListener("input", () => {
         //FIXME
         console.log(response)
         //FIXME ['search']
-        response.data['search'].forEach((name) => {
+        response.data.forEach((contact) => {
             div = document.createElement('div')
             div.innerHTML = ( 
             `<li type=button>
@@ -121,13 +106,24 @@ search.addEventListener("input", () => {
 		        <img src="./assets/icons/group.png" class="rounded-circle user_img">
 			    </div>
 		        <div class="user_info">
-		        <span>${name['firstname']} ${name['lastname']}</span>
+		        <span>${contact['firstname']} ${contact['lastname']}</span>
 		        <p>Егор Блинов: пара в 13:35</p>
 		        </div>
 		        </div>
 		    </li>`
 		    )
 		    contacts.appendChild(div)
+		    div.addEventListener("click", () => {
+		        //FIXME
+		        usr_id = 1
+		        const promise = chatIsCreate(usr_id, )
+		        promise.then((response) => {
+		            if (chatIsCreate()) {
+		                getMessagesFromDB()
+		            } 
+		        })
+		        
+		    })
         })
     })
 })
@@ -142,5 +138,10 @@ create_chat.addEventListener("click", () => {
     promise.then((response) => {
         messageArea.innerHTML = ''
     })
+})
+
+const add_user = document.querySelector(".add_chat")
+add_user.addEventListener("click", () => {
+    
 })
 
