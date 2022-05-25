@@ -29,8 +29,7 @@
 							</button>
 							<ul class="dropdown-menu">
 								<li type=button class="dropdown-item create_chat">Создать чат</li>
-								<li><a class="dropdown-item">Другое действие</a></li>
-								<li><a class="dropdown-item">Что-то еще здесь</a></li>
+								<li><a class="dropdown-item">Что еще здесь</a></li>
 							</ul>
 						</div>
 					</div>
@@ -39,10 +38,7 @@
 					</div>
 				</div>
 				<div class="card-body contacts">
-				    <ul class="contacts_list">
-				        
-				    </ul>
-						
+				    
 				</div>
 			</div>
 			<div class="col-8 card rounded-0 p-0">
@@ -57,8 +53,11 @@
 							<span<i class="fas fa-ellipsis-v"></i></span>
 						</button>
 						<ul class="dropdown-menu">
-							<li type="button" class="dropdown-item add_user">Добавить пользователя</a></li>
-							<li><a class="dropdown-item">Другое действие</a></li>
+							<li>
+                                <button type="button" class="btn add_user" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Добавить пользователя
+                                </button>     
+                            </li>
 							<li><a class="dropdown-item">Что-то еще здесь</a></li>
 							<li>
 								<hr class="dropdown-divider">
@@ -67,115 +66,8 @@
 						</ul>
 					</div>
 				</div>
-				<div class="card-body messageArea bg-secondary" id="f123">
-					<div class="d-flex justify-content-start mb-4">
-						<div class="img_cont_msg">
-							<img src="./assets/icons/student.jpg" class="rounded-circle user_img_msg">
-						</div>
-						<div class="msg_container">
-							Здравствуйте, Алексей Владимирович. У меня вопрос по поводу лабораторной работы.
-							<span class="msg_time">8:40, Сегодня</span>
-						</div>
-					</div>
-					<div class="d-flex justify-content-end mb-4">
-						<div class="msg_container_send">
-							Здравствуйте, Пётр. Все ответы на типичные вопросы я подготовил в файле.
-							<span class="msg_time_send">8:55, Сегодня</span>
-						</div>
-						<div class="img_cont_msg">
-							<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
-						</div>
-					</div>
-					<div class="d-flex justify-content-end mb-4">
-						<div class="msg_container_send">
-							картинка
-							<span class="msg_time_send">8:55, Сегодня</span>
-						</div>
-						<div class="img_cont_msg">
-							<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
-						</div>
-					</div>
-					<div class="d-flex justify-content-start mb-4">
-						<div class="img_cont_msg">
-							<img src="./assets/icons/student.jpg" class="rounded-circle user_img_msg">
-						</div>
-						<div class="msg_container">
-							Я нашёл ответ на свой вопрос, спасибо.
-							<span class="msg_time">9:00, Сегодня</span>
-						</div>
-					</div>
-					<div class="d-flex justify-content-end mb-4">
-						<div class="msg_container_send">
-							Не забудьте, что скоро у Вас защита диплома.
-							<span class="msg_time_send">9:05, Сегодня</span>
-						</div>
-						<div class="img_cont_msg">
-							<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
-						</div>
-					</div>
-					<div class="d-flex justify-content-start mb-4">
-						<div class="img_cont_msg">
-							<img src="./assets/icons/student.jpg" class="rounded-circle user_img_msg">
-						</div>
-						<div class="msg_container">
-							Да я успею доделать его, там еще преддипломная практика, время есть!
-							<span class="msg_time">9:07, Сегодня</span>
-						</div>
-					</div>
-					<div class="d-flex justify-content-end mb-4">
-						<div class="msg_container_send">
-							Ага, все вы так говорите.
-							<span class="msg_time_send">9:10, Сегодня</span>
-						</div>
-						<div class="img_cont_msg">
-							<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
-						</div>
-					</div>
-					<div class="d-flex justify-content-end mb-4">
-						<div class="msg_container_send">
-							Ага, все вы так говорите.
-							<span class="msg_time_send">9:10, Сегодня</span>
-						</div>
-						<div class="img_cont_msg">
-							<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
-						</div>
-					</div>
-					<div class="d-flex justify-content-end mb-4">
-						<div class="msg_container_send">
-							Ага, все вы так говорите.
-							<span class="msg_time_send">9:10, Сегодня</span>
-						</div>
-						<div class="img_cont_msg">
-							<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
-						</div>
-					</div>
-					<div class="d-flex justify-content-end mb-4">
-						<div class="msg_container_send">
-							Ага, все вы так говорите.
-							<span class="msg_time_send">9:10, Сегодня</span>
-						</div>
-						<div class="img_cont_msg">
-							<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
-						</div>
-					</div>
-					<div class="d-flex justify-content-end mb-4">
-						<div class="msg_container_send">
-							Ага, все вы так говорите.
-							<span class="msg_time_send">9:10, Сегодня</span>
-						</div>
-						<div class="img_cont_msg">
-							<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
-						</div>
-					</div>
-					<div class="d-flex justify-content-end mb-4">
-						<div class="msg_container_send">
-							Ага, все вы так говорите.
-							<span class="msg_time_send">9:10, Сегодня</span>
-						</div>
-						<div class="img_cont_msg">
-							<img src="./assets/icons/teacher.png" class="rounded-circle user_img_msg">
-						</div>
-					</div>
+				<div class="card-body messageArea bg-secondary">
+					
 				</div>
 				<div class="row card-footer-fluid p-0">
 					<div class="row input-group-fluid pe-0 pt-0 pb-0 ps-12">
@@ -188,13 +80,35 @@
 						</div>
 						<div class="col-1 p-0">
 							<button class="btn shadow-none pt-6 pe-12 pb-6 ps-0 float-end" id="sendBtn" type="button"><i
-									class="fas fa-location-arrow"></i></button>
+									class="fas fa-location-arrow"></i>
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<!--Модальное окно-->
+	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <!--<h5 class="modal-title" id="exampleModalLabel">Добавление пользователя</h5>-->
+                    <div class="col input-group">
+						<input type="text" placeholder="Поиск..." name="" class="form-control search-modal">
+					</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>  
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 	<script src="./bootstrap5/js/bootstrap.js"></script>
 	

@@ -37,7 +37,7 @@ html {
 	width: 40px;
 }
 
-.contacts {
+.contacts, .modal-body {
     padding:  0rem 0 !important;
     overflow-y: auto;
     white-space: nowrap;
@@ -99,5 +99,5 @@ html {
 }
 
 .card{
-	height: 100%;
+	
 }

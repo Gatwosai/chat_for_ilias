@@ -90,4 +90,13 @@ class Database {
         $res = $stmt->execute([$creator_id, $name]);
         return $res;
     }
+    
+    function addUser($usr_id, $chat_id) {
+        $sql = "INSERT INTO
+                Chat_users
+                VALUES (?, ?)";
+        $stmt = $this->connector->prepare($sql);
+        //FIXME in new db chat id then usr id
+        $res = $stmt->execute([$usr_id, $chat_id]);
+    }
 }

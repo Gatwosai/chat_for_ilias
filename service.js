@@ -57,6 +57,16 @@ function addChat(id, name) {
     })
 }
 
+function addUser(usr_id, chat_id) {
+    const promise = axios({
+        method: 'get',
+        url: `server/add_user.php?usr_id=${usr_id}&chat_id=${chat_id}`
+    })
+    return promise.then((response) => {
+        return response
+    })
+}
+
 function auth(login, password) {
     const promise =  axios({
         method: 'post',

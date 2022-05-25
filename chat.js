@@ -1,23 +1,8 @@
 const messageArea = document.querySelector(".messageArea")
 const messageIn = document.querySelector("#messageIn")
 const sendBtn = document.querySelector("#sendBtn")
-sendBtn.addEventListener("click", () => {
-    const now = new Date().toLocaleString("ru-RU").replace(",", "")
-    const promise = addMessage(1, 1, messageIn.value, now, 0, 0)
-    promise.then((response) => {
-        //FIXME
-        console.log(response)
-        mess = document.createElement('div')      
-        mess.innerHTML = (`<div class='d-flex justify-content-end mb-4'>\
-        <div class='msg_container_send'>\
-        ${messageIn.value}\
-        <span class='msg_time_send'>8:55, Сегодня</span></div>\
-        <div class='img_cont_msg'><img src='./assets/icons/teacher.png' class='rounded-circle user_img_msg'></div></div>`)
-        messageArea.appendChild(mess)
-    })
-})
-
 const contacts = document.querySelector(".contacts")
+
 function getMessagesFromDB(chat_id) {
     const promise = getMessages(chat_id)
     promise.then((response) => {
@@ -83,14 +68,14 @@ function updateChats(response) {
 	    })
     })
 }
+
 const promise = getChats();
 promise.then((response) => {
     updateChats(response)
 })
 
-const search = document.querySelector(".search")
-search.addEventListener("input", () => {
-    contacts.innerHTML = ''
+function showList(form, fun) {
+    form.innerHTML = ''
     usr_id = 1 //FIXME
     const promise = searchUser(usr_id, search.value)
     promise.then((response) => {
@@ -112,20 +97,44 @@ search.addEventListener("input", () => {
 		        </div>
 		    </li>`
 		    )
-		    contacts.appendChild(div)
+		    form.appendChild(div)
 		    div.addEventListener("click", () => {
 		        //FIXME
 		        usr_id = 1
-		        const promise = chatIsCreate(usr_id, )
+		        chat_id = 2
+		        const promise = addUser(usr_id, chat_id)
 		        promise.then((response) => {
-		            if (chatIsCreate()) {
-		                getMessagesFromDB()
-		            } 
+		            //FIXME
+		            console.log(response)   
 		        })
-		        
 		    })
         })
     })
+}
+
+sendBtn.addEventListener("click", () => {
+    const now = new Date().toLocaleString("ru-RU").replace(",", "")
+    const promise = addMessage(1, 1, messageIn.value, now, 0, 0)
+    promise.then((response) => {
+        //FIXME
+        console.log(response)
+        mess = document.createElement('div')      
+        mess.innerHTML = (`<div class='d-flex justify-content-end mb-4'>\
+        <div class='msg_container_send'>\
+        ${messageIn.value}\
+        <span class='msg_time_send'>8:55, Сегодня</span></div>\
+        <div class='img_cont_msg'><img src='./assets/icons/teacher.png' class='rounded-circle user_img_msg'></div></div>`)
+        messageArea.appendChild(mess)
+    })
+})
+
+const search = document.querySelector(".search")
+search.addEventListener("input", () => {
+    showList(contacts)
+})
+const search_modal = document.querySelector(".search-modal")
+search_modal.addEventListener("input", () => {
+    showList(document.querySelector(".modal-body"))
 })
 
 const create_chat = document.querySelector(".create_chat")
@@ -140,7 +149,7 @@ create_chat.addEventListener("click", () => {
     })
 })
 
-const add_user = document.querySelector(".add_chat")
+const add_user = document.querySelector(".add_user")
 add_user.addEventListener("click", () => {
     
 })
