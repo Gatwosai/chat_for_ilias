@@ -74,7 +74,7 @@ promise.then((response) => {
     updateChats(response)
 })
 
-function showList(form, fun) {
+function showList(form, mode) {
     form.innerHTML = ''
     usr_id = 1 //FIXME
     const promise = searchUser(usr_id, search.value)
@@ -102,11 +102,16 @@ function showList(form, fun) {
 		        //FIXME
 		        usr_id = 1
 		        chat_id = 2
-		        const promise = addUser(usr_id, chat_id)
-		        promise.then((response) => {
-		            //FIXME
-		            console.log(response)   
-		        })
+		        if (mode === "Для добавления пользователя") {
+		            const promise = addUser(usr_id, chat_id)
+		            promise.then((response) => {
+		                //FIXME
+		                console.log(response)   
+		            })
+		        }
+		        else if (mode === "Для загрузки чата") {
+		            getMessagesFromDB(chat_id)
+		        }
 		    })
         })
     })
@@ -130,11 +135,11 @@ sendBtn.addEventListener("click", () => {
 
 const search = document.querySelector(".search")
 search.addEventListener("input", () => {
-    showList(contacts)
+    showList(contacts, "Для загрузки чата")
 })
 const search_modal = document.querySelector(".search-modal")
 search_modal.addEventListener("input", () => {
-    showList(document.querySelector(".modal-body"))
+    showList(document.querySelector(".modal-body", "Для добавления пользователя"))
 })
 
 const create_chat = document.querySelector(".create_chat")
