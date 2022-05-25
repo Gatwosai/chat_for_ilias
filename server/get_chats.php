@@ -13,6 +13,6 @@ $chats = $db->getChats();
     echo $name;
     echo "\n";
 }*/
-$data['name'] = $chats;
+$data = $chats;
 header('Content-Type: application/json');
 echo json_encode($data);

@@ -76,7 +76,7 @@ function getMessagesFromDB() {
 function updateChats(response) {
     //FIXME
     console.log(response)
-    response.data['name'].forEach((name) => {
+    response.data.forEach((name) => {
         chat = document.createElement('div')
         chat.innerHTML = (
         `<li type=button onclick=getMessagesFromDB()>

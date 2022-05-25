@@ -49,16 +49,15 @@ class Database {
                 WHERE usr_id=?";
         $stmt = $this->connector->prepare($sql);
         $stmt->execute([$usr_id]);
-        $chat_id_arr = $stmt->fetchAll();
-        $name = $chat_id_arr['name'];
-        $in  = str_repeat('?,', count($name) - 1).'?';
+        $chat_id_arr = $stmt->fetchAll(PDO::FETCH_COLUMN)
+        $in  = str_repeat('?,', count($chat_id_arr) - 1).'?';
         $sql = "SELECT name
                 FROM Chat
                 WHERE chat_id
-                IN (2, 3, 4, 5)"; //FIXME
+                IN ($in)";
         $stmt = $this->connector->prepare($sql);
-        $stmt->execute($name);
-        $res = $stmt->fetchAll();
+        $stmt->execute($chat_id_arr);
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $res;
     }
     
