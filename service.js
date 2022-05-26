@@ -53,6 +53,7 @@ function addChat(id, name) {
         url: `server/add_chat.php?creator_id=${id}&name=${name}`
     })
     return promise.then((response) => {
+    	console.log(response)
         return response
     })
 }

@@ -46,6 +46,7 @@ function getMessagesFromDB(chat_id) {
 function updateChats(response) {
     //FIXME
     console.log(response)
+    contacts.innerHTML = ''
     response.data.forEach((chat) => {
         usr_id = 1; // FIXME
         contact = document.createElement('div')
@@ -69,10 +70,13 @@ function updateChats(response) {
     })
 }
 
-const promise = getChats();
-promise.then((response) => {
-    updateChats(response)
-})
+function updateChatsFromDb() {
+	const promise = getChats();
+	promise.then((response) => {
+    	updateChats(response)
+	})
+}
+
 
 function showList(form, mode) {
     form.innerHTML = ''
@@ -169,10 +173,8 @@ search_modal.addEventListener("input", () => {
 
 const create_chat = document.querySelector(".create_chat")
 create_chat.addEventListener("click", () => {
-    console.log("123")
-    // FIXME
-    id = 1
-    name = prompt('Ввод названия чата', '');
+    id = sessionStorage['usr_id']
+    name = prompt('Ввод названия чата', '')
     const promise = addChat(id, name)
     promise.then((response) => {
         messageArea.innerHTML = ''
@@ -189,4 +191,6 @@ logout.addEventListener("click", () => {
 	sessionStorage.clear();
 	window.location.href = 'index.html'
 })
+
+//timeoutID = window.setInterval(updateChatsFromDb, 3000);
 
