@@ -117,6 +117,31 @@ function showList(form, mode) {
     })
 }
 
+function showFile(input) {
+    file = input.files[0]
+    img = document.createElement('div')
+    img.innerHTML = ("<div class='d-flex justify-content-end mb-4'>\
+        <div class='msg_container_send bg-transparent'>\
+        <div class='img_cont_msg'>\
+        <img src='./assets/icons/file.png' class='rounded-circle user_img_msg'></div>\
+        </div>")
+    
+    //messageIn.type = "image";
+    //messageIn.appendChild(img)
+}
+
+function saveFileToDB(input) {
+    file = input.files[0]
+    formData = new FormData()
+    formData.append('File', file)
+    const promise = saveFile(formData)
+    promise.then(response => {
+        console.log(response)
+    })
+    //messageIn.type = "image";
+    //messageIn.appendChild(img)
+}
+
 sendBtn.addEventListener("click", () => {
     const now = new Date().toLocaleString("ru-RU").replace(",", "")
     const promise = addMessage(1, 1, messageIn.value, now, 0, 0)

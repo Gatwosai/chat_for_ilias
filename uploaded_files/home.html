@@ -38,7 +38,10 @@
 					</div>
 				</div>
 				<div class="card-body contacts">
-				    
+				    <ul class="contacts_list">
+				        
+				    </ul>
+						
 				</div>
 			</div>
 			<div class="col-8 card rounded-0 p-0">
@@ -53,10 +56,12 @@
 							<span<i class="fas fa-ellipsis-v"></i></span>
 						</button>
 						<ul class="dropdown-menu">
+							<li type="button" class="dropdown-item add_user">Добавить пользователя</a></li>
 							<li>
-                                <button type="button" class="btn add_user" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                    Добавить пользователя
-                                </button>     
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                    Launch demo modal
+                                </button>
+                                      
                             </li>
 							<li><a class="dropdown-item">Что-то еще здесь</a></li>
 							<li>
@@ -72,11 +77,7 @@
 				<div class="row card-footer-fluid p-0">
 					<div class="row input-group-fluid pe-0 pt-0 pb-0 ps-12">
 						<div class="col-1">
-                            <label class="btn" for="file-input">
-                                <i class="fas fa-paperclip"></i>
-                            </label>
-                            <input class="d-none" id="file-input" type="file" onchange="saveFileToDB(this)"/>
-							<!--<button class="btn shadow-none pe-0"><i class="fas fa-paperclip"><input type="file" onchange="showFile(this)"></i></button>-->
+							<button class="btn shadow-none pe-0" type="button"><i class="fas fa-paperclip"></i></button>
 						</div>
 						<div class="col-10 p-0">
 							<input class="form-control shadow-none border-0 ps-0" id="messageIn" type="text"
@@ -94,17 +95,14 @@
 	</div>
 	<!--Модальное окно-->
 	<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <!--<h5 class="modal-title" id="exampleModalLabel">Добавление пользователя</h5>-->
-                    <div class="col input-group">
-						<input type="text" placeholder="Поиск..." name="" class="form-control search-modal">
-					</div>
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    
+                    12345
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

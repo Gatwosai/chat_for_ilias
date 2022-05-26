@@ -67,6 +67,17 @@ function addUser(usr_id, chat_id) {
     })
 }
 
+function saveFile(file) {
+    const promise = axios({
+        method: 'post',
+        url: 'server/save_file.php',
+        data: file
+    })
+    return promise.then(response => {
+        return response
+    })
+}
+
 function auth(login, password) {
     const promise =  axios({
         method: 'post',
