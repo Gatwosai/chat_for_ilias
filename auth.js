@@ -1,27 +1,3 @@
-/*$(document).ready(function() {
-    $('#action_menu_btn').click(function(){
-        $('.action_menu').toggle();
-    });
-
-    $('#action_menu_btn_chat').click(function(){
-        $('.action_menu_chat').toggle();
-    });
-
-    $("#sendBtn").on('click', function() {
-        message = $("#message").val();
-        if (message == "") return;
-        $.post("./service/write_msg.php"), {
-                message: message,
-                to_id: to_id
-            },
-            function(data, status) {
-                $("#message").val("");
-                $("#chatBox").append(data);
-            }
-    });
-});
-*/
-
 // Страница чата
 if (false) {
     const textAreaMessage = document.querySelector("#message")
