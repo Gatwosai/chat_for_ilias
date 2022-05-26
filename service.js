@@ -82,7 +82,7 @@ function auth(login, password) {
     const promise =  axios({
         method: 'post',
         url: 'server/auth.php',
-        constdata: {
+        data: {
             login: login,
             password: password,
         }

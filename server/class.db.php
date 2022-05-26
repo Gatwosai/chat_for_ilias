@@ -43,14 +43,14 @@ class Database {
         // FIXME usr id is param
         $usr_id = 1;
         $sql = "SELECT chat_id
-                FROM Chat_users
+                FROM chat_users
                 WHERE usr_id=?";
         $stmt = $this->connector->prepare($sql);
         $stmt->execute([$usr_id]);
         $chat_id_arr = $stmt->fetchAll(PDO::FETCH_COLUMN);
         $in  = str_repeat('?,', count($chat_id_arr) - 1).'?';
         $sql = "SELECT chat_id, name
-                FROM Chat
+                FROM chat
                 WHERE chat_id
                 IN ($in)";
         $stmt = $this->connector->prepare($sql);
@@ -73,18 +73,19 @@ class Database {
         return $contacts;
     }
 
-    function test($number) {
-        $sql = "INSERT INTO
-                test (test)
-                VALUES (?)";
+    function getUsrId($login) {
+        $sql = "SELECT usr_id
+                FROM usr_data
+                WHERE login=?";
         $stmt = $this->connector->prepare($sql);
-        $res = $stmt->execute([$number]);
+        $stmt->execute([$login]);
+        $res = $stmt->fetch(PDO::FETCH_ASSOC);
         return $res;
     }
 
     function addChat($creator_id, $name) {
         $sql = "INSERT INTO
-                Chat (creator_id, name)
+                chat (creator_id, name)
                 VALUES (?, ?)";
         $stmt = $this->connector->prepare($sql);
         $res = $stmt->execute([$creator_id, $name]);
@@ -93,10 +94,9 @@ class Database {
     
     function addUser($usr_id, $chat_id) {
         $sql = "INSERT INTO
-                Chat_users
+                chat_users
                 VALUES (?, ?)";
         $stmt = $this->connector->prepare($sql);
-        //FIXME in new db chat id then usr id
-        $res = $stmt->execute([$usr_id, $chat_id]);
+        $res = $stmt->execute([$chat_id, $usr_id]);
     }
 }

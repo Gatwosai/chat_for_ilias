@@ -5,23 +5,30 @@
  * Client ID = test1
  * Входные параметры: login, password (method POST)
  */
-//require_once("class.db.php");
-//$db = new Database("localhost", "iliasuser", "123", "chat");
-//echo $db.connector->addMessage(1, 1, 123, date(), false, false);
 $data = json_decode(file_get_contents("php://input"), true);
-$id = 228;
-if (false) {
-    http_response_code(401);
-}
-echo $id;
-/*
-if(!empty($_POST['login']) && !empty($_POST['password'])){
+$login = $data['login'];
+$password = $data['password'];
+$srv = "localhost";
+$usr = "iliasuser";
+$pass = "123";
+$dbName = "ilias";
+if(!empty($login) && !empty($password)){
     require_once("connector.php");
-    $session_id = ILIAS_CONNECTOR::ILConnect($_POST['login'], $_POST['password']);
+    $session_id = ILIAS_CONNECTOR::ILConnect($login, $password);
     if(is_string($session_id)) {
-        $_SESSION['id'] = $session_id;
-        header('Location: ../home.php');
-        exit;
+        require_once("class.db.php");
+		$db = new Database($srv, $usr, $pass, $dbName);
+		$usr_id = $db->getUsrId($login);
+        //header('Location: ../home.html');
+        header('Content-Type: application/json');
+    	$response['session_id'] = $session_id;
+    	$response['usr_id'] = $usr_id['usr_id'];
+    	echo json_encode($response);
+    }
+    else {
+    	//header('Location: ../index.html');
+    	//exit;
+    	//http_response_code(401);
     }
 }
-*/
+
