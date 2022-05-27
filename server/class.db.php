@@ -90,7 +90,7 @@ class Database {
         return $res;
     }
     
-    function addUser($usr_id, $chat_id) {
+    function addUser($chat_id, $usr_id) {
         $sql = "INSERT INTO
                 chat_users
                 VALUES (?, ?)";

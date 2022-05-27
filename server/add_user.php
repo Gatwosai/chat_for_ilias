@@ -8,5 +8,5 @@ $pass = "123";
 $dbName = "chat";
 require_once("class.db.php");
 $db = new Database($srv, $usr, $pass, $dbName);
-echo $db->addUser($usr_id, $chat_id);
+echo $db->addUser($chat_id, $usr_id);
 

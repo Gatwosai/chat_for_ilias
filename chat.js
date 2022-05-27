@@ -71,40 +71,54 @@ function updateChats(response) {
 
 function showList(form, mode) {
     form.innerHTML = ''
-    usr_id = 1 //FIXME
+    usr_id = sessionStorage['usr_id']
     const promise = searchUser(usr_id, search.value)
     promise.then((response) => {
-        //FIXME
-        console.log(response)
-        //FIXME ['search']
         response.data.forEach((contact) => {
             div = document.createElement('div')
-            div.innerHTML = ( 
-            `<li type=button>
-		        <div class="d-flex bd-highlight">
-		        <div class="img_cont">
-		        <img src="./assets/icons/group.png" class="rounded-circle user_img">
-			    </div>
-		        <div class="user_info">
-		        <span>${contact['firstname']} ${contact['lastname']}</span>
-		        <p>Егор Блинов: пара в 13:35</p>
-		        </div>
-		        </div>
-		    </li>`
-		    )
+            if (mode == "Для загрузки чата") {
+		        div.innerHTML = (`<li type=button>
+				    <div class="d-flex bd-highlight">
+				    <div class="img_cont">
+				    <img src="./assets/icons/group.png" class="rounded-circle user_img">
+					</div>
+				    <div class="user_info">
+				    <span>${contact['firstname']} ${contact['lastname']}</span>
+				    <p>Егор Блинов: пара в 13:35</p>
+				    </div>
+				    </div>
+				</li>`
+				)
+            }
+            else if (mode == "Для добавления пользователя") {
+		        div.innerHTML = ( `<li type="button">
+		        	<div class="row bd-highlight m-0">
+				    <div class="col-3 img_cont">
+				    <img src="./assets/icons/group.png" class="rounded-circle user_img">
+					</div>
+				    <div class="col-7 user_info">
+				    <span>${contact['firstname']} ${contact['lastname']}</span>
+				    <p>Егор Блинов: пара в 13:35</p>
+				    </div>
+				    <div class="col-2 bd-highlight modal-dialog-centered">
+				    <i class="fas fa-user-check"></i>
+				    </div>
+				    </div>
+				</li>`
+		    	)
+		    }
 		    form.appendChild(div)
 		    div.addEventListener("click", () => {
 		        //FIXME
-		        usr_id = 1
-		        chat_id = 2
-		        if (mode === "Для добавления пользователя") {
-		            const promise = addUser(usr_id, chat_id)
+		        usr_id = sessionStorage['usr_id']
+		        chat_id = sessionStorage['chat_id']
+		        if (mode == "Для добавления пользователя") {
+		            const promise = addUser(chat_id, contact['usr_id'])
 		            promise.then((response) => {
 		                //FIXME
-		                console.log(response)   
 		            })
 		        }
-		        else if (mode === "Для загрузки чата") {
+		        else if (mode == "Для загрузки чата") {
 		            getMessagesFromDB(chat_id)
 		        }
 		    })
@@ -164,7 +178,7 @@ search.addEventListener("input", () => {
 })
 const search_modal = document.querySelector(".search-modal")
 search_modal.addEventListener("input", () => {
-    showList(document.querySelector(".modal-body", "Для добавления пользователя"))
+    showList(document.querySelector(".modal-body"), "Для добавления пользователя")
 })
 
 const create_chat = document.querySelector(".create_chat")
