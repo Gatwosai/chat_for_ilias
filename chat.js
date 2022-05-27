@@ -6,13 +6,10 @@ const contacts = document.querySelector(".contacts")
 function getMessagesFromDB(chat_id) {
     const promise = getMessages(chat_id)
     promise.then((response) => {
-        //FIXME
-        console.log(response)
         messageArea.innerHTML = ''
         response.data.forEach((message) => {
             div = document.createElement('div')
-            //FIXME get usr_id from sessionstore
-            if (message['usr_id'] == 1) {
+            if (message['usr_id'] == sessionStore['usr_id']) {
                 div.innerHTML = (
                     `<div class='d-flex justify-content-end mb-4'>\
                     <div class='msg_container_send'>\
@@ -44,39 +41,32 @@ function getMessagesFromDB(chat_id) {
 }
 
 function updateChats(response) {
-    //FIXME
-    console.log(response)
-    contacts.innerHTML = ''
-    response.data.forEach((chat) => {
-        usr_id = 1; // FIXME
-        contact = document.createElement('div')
-        contact.innerHTML = (
-        `<li type=button>
-		    <div class="d-flex bd-highlight">
-		    <div class="img_cont">
-		    <img src="./assets/icons/group.png" class="rounded-circle user_img">
-			</div>
-		    <div class="user_info">
-		    <span>${chat['name']}</span>
-		    <p>Егор Блинов: пара в 13:35</p>
-		    </div>
-		    </div>
-		</li>`
-	    )
-	    contacts.appendChild(contact)
-	    contact.addEventListener("click", () => {
-	        getMessagesFromDB(chat['chat_id'])
-	    })
+    const promise = getChats(sessionStorage['usr_id'])
+    promise.then(response => {
+    	contacts.innerHTML = ''
+    	response.data.forEach((chat) => {
+		    contact = document.createElement('div')
+		    contact.innerHTML = (
+		    `<li type=button>
+				<div class="d-flex bd-highlight">
+				<div class="img_cont">
+				<img src="./assets/icons/group.png" class="rounded-circle user_img">
+				</div>
+				<div class="user_info">
+				<span>${chat['name']}</span>
+				<p>Егор Блинов: пара в 13:35</p>
+				</div>
+				</div>
+			</li>`
+			)
+			contacts.appendChild(contact)
+			contact.addEventListener("click", () => {
+			    getMessagesFromDB(chat['chat_id'])
+			})
+    	})
     })
+    
 }
-
-function updateChatsFromDb() {
-	const promise = getChats();
-	promise.then((response) => {
-    	updateChats(response)
-	})
-}
-
 
 function showList(form, mode) {
     form.innerHTML = ''
@@ -146,6 +136,11 @@ function saveFileToDB(input) {
     //messageIn.appendChild(img)
 }
 
+if (typeof sessionStorage['session_id'] === 'undefined') {
+	//FIXME add print message
+	window.location.href = 'index.html'
+}
+
 sendBtn.addEventListener("click", () => {
     const now = new Date().toLocaleString("ru-RU").replace(",", "")
     const promise = addMessage(1, 1, messageIn.value, now, 0, 0)
@@ -192,5 +187,6 @@ logout.addEventListener("click", () => {
 	window.location.href = 'index.html'
 })
 
-//timeoutID = window.setInterval(updateChatsFromDb, 3000);
+updateChats()
+timeoutID = window.setInterval(updateChats, 3000)
 

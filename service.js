@@ -26,11 +26,10 @@ function getMessages(chat_id) {
     })
 }
 
-function getChats() {
+function getChats(usr_id) {
     const promise = axios({
         method: 'get',
-        //FIXME usr_id is param
-        url: 'server/get_chats.php?usr_id=1',
+        url: `server/get_chats.php?usr_id=${usr_id}`,
     })
     return promise.then((response) => {
         return response

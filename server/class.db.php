@@ -39,9 +39,7 @@ class Database {
         return $res;
     }
     
-    function getChats() {
-        // FIXME usr id is param
-        $usr_id = 1;
+    function getChats($usr_id) {
         $sql = "SELECT chat_id
                 FROM chat_users
                 WHERE usr_id=?";
