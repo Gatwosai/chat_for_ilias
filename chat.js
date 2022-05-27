@@ -9,12 +9,12 @@ function getMessagesFromDB(chat_id) {
         messageArea.innerHTML = ''
         response.data.forEach((message) => {
             div = document.createElement('div')
-            if (message['usr_id'] == sessionStore['usr_id']) {
+            if (message['usr_id'] === sessionStorage['usr_id']) {
                 div.innerHTML = (
-                    `<div class='d-flex justify-content-end mb-4'>\
-                    <div class='msg_container_send'>\
-                    ${message['content']}\
-                    <span class='msg_time_send'>8:55, Сегодня</span></div>\
+                    `<div class='d-flex justify-content-end mb-4'>
+                    <div class='msg_container_send'>
+                    ${message['content']}
+                    <span class='msg_time_send'>8:55, Сегодня</span></div>
                     <div class='img_cont_msg'>
                     <img src='./assets/icons/teacher.png'     
                     class='rounded-circle user_img_msg'></div>
@@ -61,6 +61,7 @@ function updateChats(response) {
 			)
 			contacts.appendChild(contact)
 			contact.addEventListener("click", () => {
+				sessionStorage['chat_id'] = chat['chat_id']
 			    getMessagesFromDB(chat['chat_id'])
 			})
     	})
@@ -143,10 +144,10 @@ if (typeof sessionStorage['session_id'] === 'undefined') {
 
 sendBtn.addEventListener("click", () => {
     const now = new Date().toLocaleString("ru-RU").replace(",", "")
-    const promise = addMessage(1, 1, messageIn.value, now, 0, 0)
+    usr_id = sessionStorage['usr_id']
+    chat_id = sessionStorage['chat_id']
+    const promise = addMessage(usr_id, chat_id, messageIn.value, now, 0, 0)
     promise.then((response) => {
-        //FIXME
-        console.log(response)
         mess = document.createElement('div')      
         mess.innerHTML = (`<div class='d-flex justify-content-end mb-4'>\
         <div class='msg_container_send'>\
