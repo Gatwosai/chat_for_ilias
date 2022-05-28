@@ -40,20 +40,45 @@ class Database {
     }
     
     function getChats($usr_id) {
-        $sql = "SELECT chat_id
+        $sql = "SELECT chat_id, usr_id
                 FROM chat_users
                 WHERE usr_id=?";
         $stmt = $this->connector->prepare($sql);
         $stmt->execute([$usr_id]);
-        $chat_id_arr = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        $in  = str_repeat('?,', count($chat_id_arr) - 1).'?';
+        $id_arr = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $chat_id_arr = array();
+        foreach ($id_arr as $key => $el) {
+			$chat_id_arr[$key] = $el['chat_id'];
+		}
+		$in  = str_repeat('?,', count($chat_id_arr) - 1).'?';
+		$sql = "SELECT COUNT(chat_id)
+				FROM chat_users
+				GROUP BY chat_id";
+		$stmt = $this->connector->prepare($sql);
+		$stmt->execute();
+		$count_usr = $stmt->fetchAll(PDO::FETCH_COLUMN);
         $sql = "SELECT chat_id, name
                 FROM chat
                 WHERE chat_id
                 IN ($in)";
         $stmt = $this->connector->prepare($sql);
         $stmt->execute($chat_id_arr);
-        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $arr_assoc = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $res = array();
+        foreach ($arr_assoc as $key => $el) {
+        	$companion = array();
+        	if ($count_usr[$key] == 2) { // 2 users
+        		$sql = "SELECT usr_id
+					FROM chat_users
+					WHERE chat_id=?
+					AND usr_id NOT IN ($usr_id)";
+				$stmt = $this->connector->prepare($sql);
+				$stmt->execute([$el['chat_id']]);
+				$companion = $stmt->fetch();
+        	}
+			$res[$key] = $el;
+        	$res[$key] += ['usr_id' => $companion['usr_id']];
+        }
         return $res;
     }
     
@@ -77,6 +102,7 @@ class Database {
     		$usr_ids[$key] = $val['usr_id'];
     	}
     	$in  = str_repeat('?,', count($usr_ids) - 1).'?';
+    	//return count($usr_ids);
         $sql = "SELECT value
                 FROM usr_pref
                 WHERE usr_id
@@ -86,6 +112,24 @@ class Database {
         $stmt->execute($usr_ids);
         $imgs = $stmt->fetchAll(PDO::FETCH_COLUMN);
         return $imgs;
+    }
+    
+    function getImgForMsg($messages) {
+    	$usr_ids = array();
+    	foreach ($messages as $key => $val) {
+    		$usr_ids[$key] = $val['usr_id'];
+    	}
+    	$imgs = array();
+    	foreach ($usr_ids as $key => $id) {
+    		$sql = "SELECT value
+    				FROM usr_pref
+    				WHERE usr_id=$id
+    				AND value LIKE '%.jpg'";
+    		$stmt = $this->connector->prepare($sql);
+    		$stmt->execute();
+    		$imgs[$key] = $stmt->fetch()[0];
+    	}
+    	return $imgs;
     }
     
     function delSearchUser($search) {

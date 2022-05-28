@@ -3,8 +3,8 @@
 /**
  * скрипт авторизации через SOAP.
  */
-require_once("./include/nusoap.php");
-require_once("./include/xml2array.php");
+require_once("include/nusoap.php");
+require_once("include/xml2array.php");
 
 
 class ILIAS_CONNECTOR {

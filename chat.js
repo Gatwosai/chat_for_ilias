@@ -16,7 +16,7 @@ function getMessagesFromDB(chat_id) {
                     ${message['content']}
                     <span class='msg_time_send'>8:55, Сегодня</span></div>
                     <div class='img_cont_msg'>
-                    <img src='./assets/icons/teacher.png'     
+                    <img src='./assets/usr_images/${message['img']}'     
                     class='rounded-circle user_img_msg'></div>
                     </div>`
                 )
@@ -25,7 +25,7 @@ function getMessagesFromDB(chat_id) {
                 div.innerHTML = (
                     `<div class='d-flex justify-content-start mb-4'>
                     <div class='img_cont_msg'>
-		            <img src='./assets/icons/student.jpg'
+		            <img src='./assets/usr_images/${message['img']}'
 		            class='rounded-circle user_img_msg'>
 		            </div>
                     <div class='msg_container'>
@@ -45,24 +45,30 @@ function updateChats(response) {
     promise.then(response => {
     	contacts.innerHTML = ''
     	response.data.forEach((chat) => {
+    		let src = './assets/icons/group.png';
+    		if (chat['img'] != null) {
+    			src = './assets/usr_images/' + chat['img'];
+    		}
 		    contact = document.createElement('div')
 		    contact.innerHTML = (
 		    `<li type=button>
 				<div class="d-flex bd-highlight">
 				<div class="img_cont">
-				<img src="./assets/icons/group.png" class="rounded-circle user_img">
+				<img src="${src}" class="rounded-circle user_img">
 				</div>
 				<div class="user_info">
 				<span>${chat['name']}</span>
-				<p>Егор Блинов: пара в 13:35</p>
+				
 				</div>
 				</div>
 			</li>`
 			)
+			//FIXME <p>Егор Блинов: пара в 13:35</p>
 			contacts.appendChild(contact)
 			contact.addEventListener("click", () => {
 				sessionStorage['chat_id'] = chat['chat_id']
 			    getMessagesFromDB(chat['chat_id'])
+			    
 			})
     	})
     })
@@ -73,7 +79,6 @@ function showList(form, mode) {
     form.innerHTML = ''
     const promise = searchUser(search.value)
     promise.then((response) => {
-    	console.log(response)
         response.data.forEach((contact) => {
             div = document.createElement('div')
             if (mode == "Для загрузки чата") {
@@ -99,6 +104,7 @@ function showList(form, mode) {
 					</div>
 				    <div class="col-7 user_info">
 				    <span>${contact['firstname']} ${contact['lastname']}</span>
+				    <p>Егор Блинов: пара в 13:35</p>
 				    </div>
 				    <div class="col-2 bd-highlight modal-dialog-centered">
 				    <i class="fas fa-user-check"></i>
@@ -109,16 +115,14 @@ function showList(form, mode) {
 		    }
 		    form.appendChild(div)
 		    div.addEventListener("click", () => {
-		        //FIXME
 		        usr_id = sessionStorage['usr_id']
 		        chat_id = sessionStorage['chat_id']
 		        if (mode == "Для добавления пользователя") {
 		            const promise = addUser(chat_id, contact['usr_id'])
 		            promise.then((response) => {
-		                div = document.createElement('div')
-		                div.innnerHTML = ('<div class="text">Пользователь добавлен</div>')
-		                document.querySelector('modal-footer').appendChild(div)
-		                showList(form, mode)
+		            	alert("Пользователь добавлен")
+		            	document.querySelector('.btn-modal').click()
+		            	//FIXME create form
 		            })
 		        }
 		        else if (mode == "Для загрузки чата") {
@@ -169,7 +173,8 @@ sendBtn.addEventListener("click", () => {
         <div class='msg_container_send'>\
         ${messageIn.value}\
         <span class='msg_time_send'>8:55, Сегодня</span></div>\
-        <div class='img_cont_msg'><img src='./assets/icons/teacher.png' class='rounded-circle user_img_msg'></div></div>`)
+        <div class='img_cont_msg'><img src='./assets/usr_images/${sessionStorage['img']}' 
+        class='rounded-circle user_img_msg'></div></div>`)
         messageArea.appendChild(mess)
     })
 })
