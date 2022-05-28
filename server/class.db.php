@@ -57,7 +57,7 @@ class Database {
         return $res;
     }
     
-    function searchUser($usr_this, $key) {
+    function searchUser($key) {
         //FIXME for search not this id
         $sql = "SELECT usr_id, firstname, lastname
                 FROM usr_data
@@ -69,6 +69,36 @@ class Database {
         $stmt->execute();
         $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $contacts;
+    }
+    
+    function getImg($mas) {
+    	$usr_ids = array();
+    	foreach ($mas as $key => $val) {
+    		$usr_ids[$key] = $val['usr_id'];
+    	}
+    	$in  = str_repeat('?,', count($usr_ids) - 1).'?';
+        $sql = "SELECT value
+                FROM usr_pref
+                WHERE usr_id
+                IN ($in)
+                AND value LIKE '%.jpg'";
+        $stmt = $this->connector->prepare($sql);
+        $stmt->execute($usr_ids);
+        $imgs = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        return $imgs;
+    }
+    
+    function delSearchUser($search) {
+    	$in = str_repeat('?,', count($search['usr_id']) - 1).'?';
+    	$sql = "SELECT usr_id
+    			FROM chat_users
+    			WHERE usr_id
+    			IN ($in)";
+    	$stmt = $this->connector->prepare($sql);
+    	$stmt->execute($search['usr_id']);
+    	echo $search['usr_id'];
+    	$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	return $res;
     }
 
     function getUsrId($login) {

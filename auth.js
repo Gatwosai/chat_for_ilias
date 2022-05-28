@@ -7,8 +7,6 @@ btnAuth.addEventListener("click", () => {
     promise.then((response) => {
         sessionStorage.setItem("session_id", response.data["session_id"])
         sessionStorage.setItem("usr_id", response.data["usr_id"])
-        //sessionStorage.setItem("login", textAreaLogin.value)
-        //sessionStorage.setItem("password", textAreaPassword.value)
         window.location.href = 'home.html'
     })
 })

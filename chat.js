@@ -71,20 +71,20 @@ function updateChats(response) {
 
 function showList(form, mode) {
     form.innerHTML = ''
-    usr_id = sessionStorage['usr_id']
-    const promise = searchUser(usr_id, search.value)
+    const promise = searchUser(search.value)
     promise.then((response) => {
+    	console.log(response)
         response.data.forEach((contact) => {
             div = document.createElement('div')
             if (mode == "Для загрузки чата") {
 		        div.innerHTML = (`<li type=button>
 				    <div class="d-flex bd-highlight">
 				    <div class="img_cont">
-				    <img src="./assets/icons/group.png" class="rounded-circle user_img">
+				    <img src="./assets/usr_images/${contact['img']}" 
+				    class="rounded-circle user_img">
 					</div>
 				    <div class="user_info">
 				    <span>${contact['firstname']} ${contact['lastname']}</span>
-				    <p>Егор Блинов: пара в 13:35</p>
 				    </div>
 				    </div>
 				</li>`
@@ -94,11 +94,11 @@ function showList(form, mode) {
 		        div.innerHTML = ( `<li type="button">
 		        	<div class="row bd-highlight m-0">
 				    <div class="col-3 img_cont">
-				    <img src="./assets/icons/group.png" class="rounded-circle user_img">
+				    <img src="./assets/usr_images/${contact['img']}" 
+				    class="rounded-circle user_img">
 					</div>
 				    <div class="col-7 user_info">
 				    <span>${contact['firstname']} ${contact['lastname']}</span>
-				    <p>Егор Блинов: пара в 13:35</p>
 				    </div>
 				    <div class="col-2 bd-highlight modal-dialog-centered">
 				    <i class="fas fa-user-check"></i>
@@ -115,7 +115,10 @@ function showList(form, mode) {
 		        if (mode == "Для добавления пользователя") {
 		            const promise = addUser(chat_id, contact['usr_id'])
 		            promise.then((response) => {
-		                //FIXME
+		                div = document.createElement('div')
+		                div.innnerHTML = ('<div class="text">Пользователь добавлен</div>')
+		                document.querySelector('modal-footer').appendChild(div)
+		                showList(form, mode)
 		            })
 		        }
 		        else if (mode == "Для загрузки чата") {
@@ -134,7 +137,6 @@ function showFile(input) {
         <div class='img_cont_msg'>\
         <img src='./assets/icons/file.png' class='rounded-circle user_img_msg'></div>\
         </div>")
-    
     //messageIn.type = "image";
     //messageIn.appendChild(img)
 }

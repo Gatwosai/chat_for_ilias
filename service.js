@@ -36,10 +36,10 @@ function getChats(usr_id) {
     })
 }
 
-function searchUser(usr_id, key) {
+function searchUser(key) {
     const promise = axios({
         method: 'get',
-        url: `server/search_user.php?usr_id=${usr_id}&key=${key}`
+        url: `server/search_user.php?key=${key}`
     })
     return promise.then((response) => {
         return response
