@@ -109,6 +109,5 @@ function sendMail() {
     })
     return promise.then(response => {
         return response
-    }
-    }
+    })
 }
