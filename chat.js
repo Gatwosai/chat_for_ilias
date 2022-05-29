@@ -45,12 +45,8 @@ function updateChats(response) {
     promise.then(response => {
     	contacts.innerHTML = ''
     	response.data.forEach((chat) => {
-    	    countMsgs = checkNewMessages(chat['chat_id'])
-			if (countMsgs > 0) {
-			    countMsgsDiv = document.createElement('div')
-			    countMsgsDiv.innerHTML = (
-			    `<div class="w-10 rounded-circle">${countMsgs}</div>`)
-			}
+    	    
+			
     		let src = './assets/icons/group.png';
     		if (chat['img'] != null) {
     			src = './assets/usr_images/' + chat['img'];
@@ -64,11 +60,17 @@ function updateChats(response) {
 				</div>
 				<div class="user_info">
 				<span>${chat['name']}</span>
-				${countMsgsDiv}
 				</div>
 				</div>
 			</li>`
 			)
+			countMsgs = checkNewMessages(chat['chat_id'])
+			if (countMsgs > 0) {
+			    countMsgsDiv = document.createElement('div')
+			    countMsgsDiv.innerHTML = (
+			    `<div class="w-10 rounded-circle">${countMsgs}</div>`)
+			    document.querySelector(".user_info").appendChild(countMsgsDiv)
+			}
 			//FIXME <p>Егор Блинов: пара в 13:35</p>
 			contacts.appendChild(contact)
 			contact.addEventListener("click", () => {
