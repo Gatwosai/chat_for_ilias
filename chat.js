@@ -45,13 +45,12 @@ function updateChats(response) {
     promise.then(response => {
     	contacts.innerHTML = ''
     	response.data.forEach((chat) => {
-    	    countMsgs = checkNewMessages(chat['chat_id'])
-    	    countMsgsDiv = null
-			if (countMsgs > 0) {
-			    countMsgsDiv = document.createElement('div')
-			    countMsgsDiv.innerHTML = (
-			    `<div class="w-10 rounded-circle">${countMsgs}</div>`)
-			}
+    	    //countMsgs = checkNewMessages(chat['chat_id'])
+			//if (countMsgs > 0) {
+			    //countMsgsDiv = document.createElement('div')
+			    //countMsgsDiv.innerHTML = (
+			   // `<div class="w-10 rounded-circle">${countMsgs}</div>`)
+			//}
     		let src = './assets/icons/group.png';
     		if (chat['img'] != null) {
     			src = './assets/usr_images/' + chat['img'];
