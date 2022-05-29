@@ -45,32 +45,33 @@ function updateChats(response) {
     promise.then(response => {
     	contacts.innerHTML = ''
     	response.data.forEach((chat) => {
-    	    
-			
     		let src = './assets/icons/group.png';
     		if (chat['img'] != null) {
     			src = './assets/usr_images/' + chat['img'];
     		}
+    		countMsgs = checkNewMessages(chat['chat_id'])
+    		bg = 'bg-danger'
+			if (countMsgs > 0) {
+			    countMsgs = ''
+			    bg = ''
+			}
 		    contact = document.createElement('div')
 		    contact.innerHTML = (
-		    `<li type=button>
-				<div class="d-flex bd-highlight">
-				<div class="img_cont">
-				<img src="${src}" class="rounded-circle user_img">
-				</div>
-				<div class="user_info">
-				<span>${chat['name']}</span>
-				</div>
-				</div>
+		    `<li type="button">
+		        	<div class="row bd-highlight m-0">
+				    <div class="col-3 img_cont">
+				    <img src="${src}" class="rounded-circle user_img">
+					</div>
+				    <div class="col-7 user_info">
+				    <span>${chat['name']}</span>
+				    <p>Егор Блинов: пара в 13:35</p>
+				    </div>
+				    <div class="col-2 bd-highlight modal-dialog-centered">
+				    <i class="align-centered countmsg ${bg} rounded-circle">&nbsp;&nbsp;${countMsgs}</i>
+				    </div>
+				    </div>
 			</li>`
 			)
-			countMsgs = checkNewMessages(chat['chat_id'])
-			if (countMsgs > 0) {
-			    countMsgsDiv = document.createElement('div')
-			    countMsgsDiv.innerHTML = (
-			    `<div class="w-10 rounded-circle">${countMsgs}</div>`)
-			    document.querySelector(".user_info").appendChild(countMsgsDiv)
-			}
 			//FIXME <p>Егор Блинов: пара в 13:35</p>
 			contacts.appendChild(contact)
 			contact.addEventListener("click", () => {
@@ -181,7 +182,7 @@ function checkNewMessages(chat_id) {
 
 if (typeof sessionStorage['session_id'] === 'undefined') {
 	//FIXME add print message
-	window.location.href = 'index.html'
+	//window.location.href = 'index.html'
 }
 
 sendBtn.addEventListener("click", () => {
