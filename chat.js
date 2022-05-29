@@ -45,30 +45,30 @@ function updateChats(response) {
     promise.then(response => {
     	contacts.innerHTML = ''
     	response.data.forEach((chat) => {
+    		bg = 'bg-danger'
+    		countNotReadMsgs = chat['count']
+    		if (countNotReadMsgs == 0) {
+    			bg = ''
+    			countNotReadMsgs = ''
+    		}
     		let src = './assets/icons/group.png';
     		if (chat['img'] != null) {
     			src = './assets/usr_images/' + chat['img'];
     		}
-    		countMsgs = checkNewMessages(chat['chat_id'])
-    		bg = 'bg-danger'
-			if (countMsgs == 0) {
-			    countMsgs = ''
-			    bg = ''
-			}
 		    contact = document.createElement('div')
 		    contact.innerHTML = (
-		    `<li type="button">
-		        	<div class="row bd-highlight m-0">
-				    <div class="col-3 img_cont">
+		    `<li type="button" class="row d-flex">
+		        	
+				    <div class="col-2 img_cont">
 				    <img src="${src}" class="rounded-circle user_img">
 					</div>
 				    <div class="col-7 user_info">
 				    <span>${chat['name']}</span>
 				    </div>
-				    <div class="col-2 bd-highlight modal-dialog-centered">
-				    <i class="align-centered countmsg ${bg} rounded-circle">&nbsp;&nbsp;${countMsgs}</i>
+				    <div class="col bd-highlight modal-dialog-centered">
+				    <i class="align-centered ${bg} countmsg rounded-circle">&nbsp;&nbsp;${countNotReadMsgs}</i>
 				    </div>
-				    </div>
+				    
 			</li>`
 			)
 			//FIXME <p>Егор Блинов: пара в 13:35</p>
@@ -76,7 +76,6 @@ function updateChats(response) {
 			contact.addEventListener("click", () => {
 				sessionStorage['chat_id'] = chat['chat_id']
 			    getMessagesFromDB(chat['chat_id'])
-			    
 			})
     	})
     })
@@ -141,16 +140,28 @@ function showList(form, mode) {
     })
 }
 
-function showFile(input) {
+function showFile(input, fileName) {
     file = input.files[0]
-    img = document.createElement('div')
+    fileDiv = document.createElement('div')
+    fileDiv.innerHTML = (`<div class='d-flex justify-content-end mb-4'>
+                    <div class='msg_container_send'>
+                    <img src='./assets/icons/file.png'
+                    ${fileName}
+                    class='rounded-circle user_img_msg'></div>
+                    <div class='img_cont_msg'>
+                    <img src='./assets/usr_images/${sessionStorage['img']}'     
+                    class='rounded-circle user_img_msg'></div>
+                    </div>`
+    )
+    /*
     img.innerHTML = ("<div class='d-flex justify-content-end mb-4'>\
         <div class='msg_container_send bg-transparent'>\
         <div class='img_cont_msg'>\
         <img src='./assets/icons/file.png' class='rounded-circle user_img_msg'></div>\
         </div>")
+        */
     //messageIn.type = "image";
-    //messageIn.appendChild(img)
+    messageArea.appendChild(fileDiv)
 }
 
 function saveFileToDB(input) {
@@ -160,28 +171,28 @@ function saveFileToDB(input) {
     const promise = saveFile(formData)
     promise.then(response => {
         console.log(response)
+        showFile(input, file['name'])
     })
-    //messageIn.type = "image";
-    //messageIn.appendChild(img)
 }
 
-function mail() {
-    const promise = sendMail()
+function mail(companion) {
+    const promise = sendMail(companion)
     promise.then(response => {
         console.log(response)
     })
 }
 
-function checkNewMessages(chat_id) {
-    const promise = checkNewMessagesFromDB(chat_id)
-    promise.then(response => {
-        return response.data
-    })
+function lastSeen(usr_id) {
+	const promise = checkLastSeen(usr_id)
+	promise.then(response => {
+		//FIXME
+		mail(usr_id)
+	})
 }
 
 if (typeof sessionStorage['session_id'] === 'undefined') {
 	//FIXME add print message
-	//window.location.href = 'index.html'
+	window.location.href = 'index.html'
 }
 
 sendBtn.addEventListener("click", () => {
@@ -194,10 +205,20 @@ sendBtn.addEventListener("click", () => {
         mess.innerHTML = (`<div class='d-flex justify-content-end mb-4'>\
         <div class='msg_container_send'>\
         ${messageIn.value}\
-        <span class='msg_time_send'>8:55, Сегодня</span></div>\
-        <div class='img_cont_msg'><img src='./assets/usr_images/${sessionStorage['img']}' 
+        <span class='msg_time_send'>${now}</span></div>\
+        <div class='img_cont_msg'>
+        <img src='./assets/usr_images/${sessionStorage['img']}' 
         class='rounded-circle user_img_msg'></div></div>`)
         messageArea.appendChild(mess)
+        companion = response.data
+        const promise2 = checkLastSeen(companion)
+        promise2.then(response2 => {
+        	if (response2 > 2) // Если более двух часов без активности
+        	{
+        		//FIXME
+        		//mail(companion)
+        	}
+        })
     })
 })
 

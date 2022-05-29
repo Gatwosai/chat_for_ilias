@@ -26,6 +26,24 @@ class Database {
 	    $stmt = $this->connector->prepare($sql);
 	    $res  = $stmt->execute([$usr_id, $chat_id, $content, $datetime,        
 	                            $is_read, $is_file]);
+	    $sql = "SELECT COUNT(chat_id)
+	    		FROM chat_users
+	    		WHERE chat_id=$chat_id
+				GROUP BY chat_id";
+	    $stmt = $this->connector->prepare($sql);
+	    $stmt->execute();
+        $res = $stmt->fetch()[0];
+        if ($res == 2) {
+			$sql = "SELECT usr_id
+					from chat_users
+					WHERE usr_id NOT IN ($usr_id)";
+			$stmt = $this->connector->prepare($sql);
+			$stmt->execute();
+			$res = $stmt->fetch()[0];
+		}
+		else {
+			$res = 0;
+		}
         return $res;
     }
 
@@ -45,16 +63,15 @@ class Database {
         return $res;
     }
     
-    function checkNewMessages($chat_id) {
-        $sql = "SELECT COUNT(1)
-	            FROM message
-	            WHERE chat_id=?
-	            AND is_read=0";
-	    $stmt = $this->connector->prepare($sql);
-	    $stmt->execute([$chat_id]);
-        $res = $stmt->fetch()[0];
-        return $res;
-    }
+    function updateLastSeen($usr_id) {
+    	$date = date("Y.m.d H:i:s");
+    	return $date;
+		$sql = "UPDATE usr_data
+                SET last_update=$date
+                WHERE usr_id=?";
+        $stmt = $this->connector->prepare($sql);
+	    $stmt->execute([$usr_id]);
+	}
     
     function getChats($usr_id) {
         $sql = "SELECT chat_id, usr_id
@@ -93,10 +110,28 @@ class Database {
 				$stmt->execute([$el['chat_id']]);
 				$companion = $stmt->fetch();
         	}
+        	$sql = "SELECT COUNT(1)
+	            FROM message
+	            WHERE chat_id=?
+	            AND is_read=0";
+	    	$stmt = $this->connector->prepare($sql);
+	    	$stmt->execute([$el['chat_id']]);
+        	$countMsgs = $stmt->fetch()[0];
 			$res[$key] = $el;
         	$res[$key] += ['usr_id' => $companion['usr_id']];
+        	$res[$key] += ['count' => $countMsgs];
         }
         return $res;
+    }
+    
+    function getLastSeen($usr_id) {
+    	$sql = "SELECT last_update
+    			FROM usr_data
+    			WHERE usr_id=$usr_id";
+    	$stmt = $this->connector->prepare($sql);
+    	$stmt->execute();
+    	$res = $stmt->fetch()[0];
+    	return $res;
     }
     
     function searchUser($key) {
@@ -119,7 +154,6 @@ class Database {
     		$usr_ids[$key] = $val['usr_id'];
     	}
     	$in  = str_repeat('?,', count($usr_ids) - 1).'?';
-    	//return count($usr_ids);
         $sql = "SELECT value
                 FROM usr_pref
                 WHERE usr_id

@@ -15,6 +15,7 @@ $pass = "123";
 $dbName = "ilias";
 $db = new Database($srv, $usr, $pass, $dbName);
 $imgs = $db->getImg($chats);
+$db->updateLastSeen($usr_id);
 
 $i = 0;
 $data = array();

@@ -27,6 +27,11 @@ html {
     width: 70px;
 }
 
+.countmsg {
+	height: 25px;
+	width: 25px;
+}
+
 .user_img_msg {
 	height: 40px;
 	width: 40px;

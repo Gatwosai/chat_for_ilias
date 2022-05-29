@@ -102,12 +102,22 @@ function auth(login, password) {
     })
 }
 
-function sendMail() {
+function sendMail(companion) {
     const promise = axios({
         method: 'put',
-        url: 'server/send_mail.php'
+        url: `server/send_mail.php?usr_id=${companion}`
     })
     return promise.then(response => {
         return response
     })
+}
+
+function checkLastSeen(usr_id) {
+	const promise = axios({
+		method: 'get',
+		url: `server/last_seen.php?usr_id=${usr_id}`
+	})
+	return promise.then(response => {
+		return response
+	})
 }

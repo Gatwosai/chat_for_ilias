@@ -26,5 +26,13 @@ $is_read = $data['is_read'];
 $is_file = $data['is_file'];
 require_once("class.db.php");
 $db = new Database($srv, $usr, $pass, $dbName);
-$message = $db->addMessage($usr_id, $chat_id, $content, $datetime, $is_read, $is_file);
+$companion = $db->addMessage($usr_id, $chat_id, $content, $datetime, $is_read, $is_file);
+
+$srv = "localhost";
+$usr = "iliasuser";
+$pass = "123";
+$dbName = "ilias";
+$db = new Database($srv, $usr, $pass, $dbName);
+$db->updateLastSeen($usr_id);
+echo $companion;
 ?>
