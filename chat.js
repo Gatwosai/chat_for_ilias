@@ -51,7 +51,7 @@ function updateChats(response) {
     		}
     		countMsgs = checkNewMessages(chat['chat_id'])
     		bg = 'bg-danger'
-			if (countMsgs > 0) {
+			if (countMsgs == 0) {
 			    countMsgs = ''
 			    bg = ''
 			}
@@ -64,7 +64,6 @@ function updateChats(response) {
 					</div>
 				    <div class="col-7 user_info">
 				    <span>${chat['name']}</span>
-				    <p>Егор Блинов: пара в 13:35</p>
 				    </div>
 				    <div class="col-2 bd-highlight modal-dialog-centered">
 				    <i class="align-centered countmsg ${bg} rounded-circle">&nbsp;&nbsp;${countMsgs}</i>
