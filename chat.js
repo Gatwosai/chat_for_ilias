@@ -45,6 +45,13 @@ function updateChats(response) {
     promise.then(response => {
     	contacts.innerHTML = ''
     	response.data.forEach((chat) => {
+    	    countMsgs = checkNewMessages(chat['chat_id'])
+    	    countMsgsDiv = null
+			if (countMsgs > 0) {
+			    countMsgsDiv = document.createElement('div')
+			    countMsgsDiv.innerHTML = (
+			    `<div class="w-10 rounded-circle">${countMsgs}</div>`)
+			}
     		let src = './assets/icons/group.png';
     		if (chat['img'] != null) {
     			src = './assets/usr_images/' + chat['img'];
@@ -58,7 +65,7 @@ function updateChats(response) {
 				</div>
 				<div class="user_info">
 				<span>${chat['name']}</span>
-				
+				${countMsgsDiv}
 				</div>
 				</div>
 			</li>`
@@ -70,7 +77,6 @@ function updateChats(response) {
 			    getMessagesFromDB(chat['chat_id'])
 			    
 			})
-			checkNewMessages(chat['chat_id'])
     	})
     })
     
@@ -168,13 +174,7 @@ function mail() {
 function checkNewMessages(chat_id) {
     const promise = checkNewMessagesFromDB(chat_id)
     promise.then(response => {
-        if (response.data > 0) { // Есть непрочитанные сообщения
-            //const promise = checkNewMessagesFromDB(chat_id)
-            //promise.then(response => {
-                //console.log(response.data)
-            //})
-        }
-        console.log("Есть " + response.data + " непрочитанных сообщений")
+        return response.data
     })
 }
 
