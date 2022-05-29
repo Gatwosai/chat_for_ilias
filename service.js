@@ -16,10 +16,20 @@ function addMessage(usr_id, chat_id, content, datetime, is_read, is_file) {
     })
 }
 
-function getMessages(chat_id) {
+function getMessages(chat_id, usr_id) {
     const promise = axios({
         method: 'get',
-        url: `server/get_messages.php?chat_id=${chat_id}`
+        url: `server/get_messages.php?chat_id=${chat_id}&usr_id=${usr_id}`
+    })
+    return promise.then((response) => {
+        return response
+    })
+}
+
+function checkNewMessagesFromDB(chat_id) {
+    const promise = axios({
+        method: 'get',
+        url: `server/check_messages.php?chat_id=${chat_id}`
     })
     return promise.then((response) => {
         return response
@@ -90,4 +100,15 @@ function auth(login, password) {
     return promise.then((response) => {
         return response
     })
+}
+
+function sendMail() {
+    const promise = axios({
+        method: 'put',
+        url: 'server/send_mail.php'
+    })
+    return promise.then(response => {
+        return response
+    }
+    }
 }

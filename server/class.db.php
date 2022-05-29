@@ -29,13 +29,30 @@ class Database {
         return $res;
     }
 
-    function getMessages($chat_id) {
+    function getMessages($chat_id, $usr_id) {
+        $sql = "UPDATE message
+                SET is_read=1
+                WHERE chat_id=?
+                AND usr_id NOT IN (?)";
+        $stmt = $this->connector->prepare($sql);
+	    $stmt->execute([$chat_id, $usr_id]);       
         $sql = "SELECT usr_id, content
 	            FROM message
 	            WHERE chat_id=?";
 	    $stmt = $this->connector->prepare($sql);
 	    $stmt->execute([$chat_id]);
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $res;
+    }
+    
+    function checkNewMessages($chat_id) {
+        $sql = "SELECT COUNT(1)
+	            FROM message
+	            WHERE chat_id=?
+	            AND is_read=0";
+	    $stmt = $this->connector->prepare($sql);
+	    $stmt->execute([$chat_id]);
+        $res = $stmt->fetch()[0];
         return $res;
     }
     

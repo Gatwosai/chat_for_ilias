@@ -4,7 +4,7 @@ const sendBtn = document.querySelector("#sendBtn")
 const contacts = document.querySelector(".contacts")
 
 function getMessagesFromDB(chat_id) {
-    const promise = getMessages(chat_id)
+    const promise = getMessages(chat_id, sessionStorage['usr_id'])
     promise.then((response) => {
         messageArea.innerHTML = ''
         response.data.forEach((message) => {
@@ -70,6 +70,7 @@ function updateChats(response) {
 			    getMessagesFromDB(chat['chat_id'])
 			    
 			})
+			checkNewMessages(chat['chat_id'])
     	})
     })
     
@@ -155,6 +156,26 @@ function saveFileToDB(input) {
     })
     //messageIn.type = "image";
     //messageIn.appendChild(img)
+}
+
+function mail() {
+    const promise = sendMail()
+    promise.then(response => {
+        console.log(response)
+    })
+}
+
+function checkNewMessages(chat_id) {
+    const promise = checkNewMessagesFromDB(chat_id)
+    promise.then(response => {
+        if (response.data > 0) { // Есть непрочитанные сообщения
+            //const promise = checkNewMessagesFromDB(chat_id)
+            //promise.then(response => {
+                //console.log(response.data)
+            //})
+        }
+        console.log("Есть " + response.data + " непрочитанных сообщений")
+    })
 }
 
 if (typeof sessionStorage['session_id'] === 'undefined') {

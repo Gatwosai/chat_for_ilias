@@ -10,5 +10,5 @@ btnAuth.addEventListener("click", () => {
         sessionStorage.setItem("usr_id", response.data["usr_id"])
         sessionStorage.setItem("img", response.data["img"])
         window.location.href = 'home.html'
-    })
+   /})
 })

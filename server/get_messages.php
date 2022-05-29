@@ -10,7 +10,7 @@ $pass = "123";
 $dbName = "chat";
 require_once("class.db.php");
 $db = new Database($srv, $usr, $pass, $dbName);
-$messages = $db->getMessages($chat_id);
+$messages = $db->getMessages($chat_id, $usr_id);
 
 $srv = "localhost";
 $usr = "iliasuser";
