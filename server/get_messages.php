@@ -4,6 +4,7 @@
  */
 
 $chat_id = $_GET['chat_id'];
+$usr_id = $_GET['usr_id'];
 $srv = "localhost";
 $usr = "iliasuser";
 $pass = "123";

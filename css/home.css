@@ -100,9 +100,11 @@ html {
 }
 
 .messageArea {
-	overflow-y: auto;
+	position: relative;
+	overflow-y: scroll;
+	height: 100%;
 }
 
 .card{
-	
+	height: 100%;
 }

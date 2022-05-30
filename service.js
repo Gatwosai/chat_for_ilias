@@ -1,4 +1,4 @@
-function addMessage(usr_id, chat_id, content, datetime, is_read, is_file) {
+function addMessageToDB(usr_id, chat_id, content, datetime, is_read, is_file) {
     const promise = axios({
         method: 'post',
         url: 'server/add_message.php',

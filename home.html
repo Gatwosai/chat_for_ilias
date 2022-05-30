@@ -12,7 +12,7 @@
 	<script src="service.js"></script>
 	<link href="./bootstrap5/css/bootstrap.css" rel="stylesheet">
 	<link href="./css/home.css" rel="stylesheet">
-
+	<link rel="shortcut icon" type="image/png" href="./assets/icons/favicon.ico">
 </head>
 
 <body>
@@ -22,14 +22,14 @@
 				<div class="row card-header p-0 bg-transparent">
 					<div class="col-1">
 						<div class="dropdown">
-							<button type="button" class="btn shadow-none" data-bs-toggle="dropdown"
+							<button type="button" class="btn shadow-none create_chat" data-bs-toggle="dropdown"
 								aria-expanded="false">
-								<span<i class="fas fa-thin fa-bars"></i></span>
+								<span><i class="fas fa-comments"></i></span>
+								<!--<span<i class="fas fa-thin fa-bars"></i></span>
 							</button>
 							<ul class="dropdown-menu">
 								<li type=button class="dropdown-item create_chat">Создать чат</li>
-								<li><a class="dropdown-item">Что еще здесь</a></li>
-							</ul>
+							</ul>-->
 						</div>
 					</div>
 					<div class="col input-group">
@@ -42,14 +42,11 @@
 			</div>
 			<div class="col-8 card rounded-0 p-0">
 				<div class="row card-header ps-24 pe-0 pb-0 pt-0 bg-transparent">
-					<div class="col-10 modal-dialog-centered">
-						<!--<img src="./assets/icons/teacher.png" class="col-2 float-start rounded-circle">-->
-						
-					</div>
+					<div class="col-10 modal-dialog-centered chat-title"></div>
 					<div class="col-2 dropdown">
 						<button type="button" class="btn shadow-none float-end" data-bs-toggle="dropdown"
 							aria-expanded="false">
-							<span<i class="fas fa-ellipsis-v"></i></span>
+							<span><i class="fas fa-ellipsis-v"></i></span>
 						</button>
 						<ul class="dropdown-menu">
 							<li>
@@ -57,7 +54,6 @@
                                     Добавить пользователя
                                 </button>     
                             </li>
-							<li><a class="dropdown-item">Что-то еще здесь</a></li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
@@ -69,19 +65,18 @@
 					
 				</div>
 				<div class="row card-footer-fluid p-0">
-					<div class="row input-group-fluid pe-0 pt-0 pb-0 ps-12">
+					<div class="row input-group-fluid pe-0 pt-0 pb-0 ps-0">
 						<div class="col-1">
                             <label class="btn" for="file-input">
                                 <i class="fas fa-paperclip"></i>
                             </label>
                             <input class="d-none" id="file-input" type="file" onchange="saveFileToDB(this)"/>
-							<!--<button class="btn shadow-none pe-0"><i class="fas fa-paperclip"><input type="file" onchange="showFile(this)"></i></button>-->
 						</div>
-						<div class="col-10 p-0">
+						<div class="col-10">
 							<input class="form-control shadow-none border-0 ps-0" id="messageIn" type="text"
 								placeholder="Ввод сообщения...">
 						</div>
-						<div class="col-1 p-0">
+						<div class="col p-0">
 							<button class="btn shadow-none pt-6 pe-12 pb-6 ps-0 float-end" id="sendBtn" type="button">
 								<i class="fas fa-location-arrow"></i>
 							</button>

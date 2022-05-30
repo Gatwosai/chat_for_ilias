@@ -48,13 +48,13 @@ class Database {
     }
 
     function getMessages($chat_id, $usr_id) {
+    //FIXME Свои сообщения
         $sql = "UPDATE message
                 SET is_read=1
-                WHERE chat_id=?
-                AND usr_id NOT IN (?)";
+                WHERE chat_id=?";
         $stmt = $this->connector->prepare($sql);
-	    $stmt->execute([$chat_id, $usr_id]);       
-        $sql = "SELECT usr_id, content
+	    $stmt->execute([$chat_id]);       
+        $sql = "SELECT usr_id, content, datetime, is_file
 	            FROM message
 	            WHERE chat_id=?";
 	    $stmt = $this->connector->prepare($sql);
@@ -136,7 +136,7 @@ class Database {
     
     function searchUser($key) {
         //FIXME for search not this id
-        $sql = "SELECT usr_id, firstname, lastname
+        $sql = "SELECT usr_id, firstname, lastname, login
                 FROM usr_data
                 WHERE login LIKE '$key%'
                 OR firstname LIKE '$key%'

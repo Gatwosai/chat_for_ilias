@@ -12,8 +12,6 @@ $srv = "localhost";
 $usr = "iliasuser";
 $pass = "123";
 $dbName = "ilias";
-$login = "Tutor";
-$password = "qwerty";
 if(!empty($login) && !empty($password)){
     require_once("connector.php");
     $session_id = ILIAS_CONNECTOR::ILConnect($login, $password);
