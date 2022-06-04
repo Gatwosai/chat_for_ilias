@@ -1,58 +1,51 @@
 <!DOCTYPE html>
-<html>
-
+<html class="h-100">
 <head>
-
-	<title>Чат для ILIAS</title>
-	<meta charset="utf-8">
-	<script src="check_auth.js"></script>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-		integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <meta charset="utf-8">
+    <title>Чат для ILIAS</title>
+    <script src="check_auth.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 	<script src="service.js"></script>
-	<link href="./bootstrap5/css/bootstrap.css" rel="stylesheet">
-	<link href="./css/home.css" rel="stylesheet">
-	<link rel="shortcut icon" type="image/png" href="./assets/icons/favicon.ico">
+    <link href="./bootstrap5/css/bootstrap.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link href="./css/home.css" rel="stylesheet">
+    <link rel="shortcut icon" type="image/png" href="./assets/icons/favicon.ico">
 </head>
-
-<body>
-	<div class="container-fluid h-100">
-		<div class="row h-100">
-			<div class="col-4 card rounded-0 p-0">
-				<div class="row card-header p-0 bg-transparent">
-					<div class="col-1">
-						<div class="dropdown">
-							<button type="button" class="btn shadow-none create_chat" data-bs-toggle="dropdown"
-								aria-expanded="false">
-								<span><i class="fas fa-comments"></i></span>
-								<!--<span<i class="fas fa-thin fa-bars"></i></span>
-							</button>
-							<ul class="dropdown-menu">
-								<li type=button class="dropdown-item create_chat">Создать чат</li>
-							</ul>-->
-						</div>
+<body class="h-100" id="ID">
+    <div class="row h-100">
+        <div class="contacts card p-0 rounded-0 col-sm-4 col-md-3 col-lg-3 ">
+            <div class="card-header row">
+            <div class="col-1">
+                <i class="bi bi-chat" type="button" class="add_chat" data-bs-toggle="modal" data-bs-target="#Modal-chat"></i>
+            </div>
+            <div class="col input-group">
+						<input type="text" placeholder="Поиск..." name="" class="form-control search p-0" style="height:24px">
 					</div>
-					<div class="col input-group">
-						<input type="text" placeholder="Поиск..." name="" class="form-control search">
-					</div>
-				</div>
-				<div class="card-body contacts">
-				    
-				</div>
-			</div>
-			<div class="col-8 card rounded-0 p-0">
-				<div class="row card-header ps-24 pe-0 pb-0 pt-0 bg-transparent">
-					<div class="col-10 modal-dialog-centered chat-title"></div>
-					<div class="col-2 dropdown">
-						<button type="button" class="btn shadow-none float-end" data-bs-toggle="dropdown"
-							aria-expanded="false">
-							<span><i class="fas fa-ellipsis-v"></i></span>
-						</button>
-						<ul class="dropdown-menu">
+            </div>
+            <div class="card-body p-0 contacts">
+            
+            </div>
+        </div>
+        <div class="col-sm-8 col-md-9 col-lg-9 card rounded-0 p-0 chat">
+            <div class="card-header row m-0">
+                <div class="col-1 btn back-contacts p-0" style="height:24px;">
+                    <i class="bi bi-arrow-left float-start"></i>
+                </div>
+                <div class="col-9 chat-title">
+                    Иван Иванов
+                </div>
+                <div class="col-2 p-0 dropdown">
+                    <i class="bi bi-three-dots-vertical float-end" type="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                    <ul class="dropdown-menu">
 							<li>
-                                <button type="button" class="btn add_user" data-bs-toggle="modal" data-bs-target="#Modal">
+                                <a type="button" class="dropdown-item add_user" data-bs-toggle="modal" data-bs-target="#Modal">
                                     Добавить пользователя
-                                </button>     
+                                </a>
+                            </li>
+                            <li>
+                                <a type="button" class="dropdown-item add_user" data-bs-toggle="modal" data-bs-target="#Modal-info">
+                                    Информация о чате
+                                </a>
                             </li>
                             <li><a type="button" class="dropdown-item show_info data-bs-toggle="modal" data-bs-target="#Modal-chat"">Информация о чате</a></li>
 							<li>
@@ -60,42 +53,41 @@
 							</li>
 							<li><a type="button" class="dropdown-item logout">Выйти</a></li>
 						</ul>
-					</div>
+                </div>
+            </div>
+            <div class="card-body bg-light messageArea">
+                card-body
+            </div>
+            <div class="card-footer d-flex">
+                <label class="btn ps-0 pb-0 pe-8 pt-0" style="padding-right:8px;" for="file-input">
+                    <i class="bi bi-paperclip"></i>
+                </label>
+                <input class="d-none" id="file-input" type="file" onchange="saveFileToDB(this)"/>
+                <input class="form-control shadow-none border-0 p-0" id="messageIn" type="text" placeholder="Ввод сообщения...">
+                <div class="btn float-end pt-0 pb-0" id="sendBtn" style="padding-left:8px;padding-right:8px;">
+				    <i class="bi bi-send-fill"></i>
 				</div>
-				<div class="card-body messageArea bg-secondary">
-					
-				</div>
-				<div class="row card-footer-fluid p-0">
-					<div class="row input-group-fluid pe-0 pt-0 pb-0 ps-0">
-						<div class="col-1">
-                            <label class="btn" for="file-input">
-                                <i class="fas fa-paperclip"></i>
-                            </label>
-                            <input class="d-none" id="file-input" type="file" onchange="saveFileToDB(this)"/>
-						</div>
-						<div class="col-10">
-							<input class="form-control shadow-none border-0 ps-0" id="messageIn" type="text"
-								placeholder="Ввод сообщения...">
-						</div>
-						<div class="col p-0">
-							<button class="btn shadow-none pt-6 pe-12 pb-6 ps-0 float-end" id="sendBtn" type="button">
-								<i class="fas fa-location-arrow"></i>
-							</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!--Модальное окно-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--Модальное окно для добавления пользователя-->
 	<div class="modal fade" id="Modal" tabindex="-1" aria-labelledby="ModalLabel">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
+<<<<<<< HEAD
                 <h5 class="modal-title" id="exampleModalLabel">Информация о чате</h5>
                     <!--<h5 class="modal-title" id="exampleModalLabel">Добавление пользователя</h5>-->
                     
                     <button type="button" class="search_modal search-modal btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+=======
+                    <h5 class="modal-title" id="exampleModalLabel">Добавление пользователя</h5>
+                    <div class="input-group">
+						<input type="text" placeholder="Поиск..." name="" class="form-control search-modal">
+					</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+>>>>>>> b6c75b3273566c5cacf1bd82c3d8fc157341dcfe
                 </div>
                 <div class="modal-body">
                     <li type="button">
@@ -137,10 +129,51 @@
 				</li>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary btn-modal" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary btn-modal" data-bs-dismiss="modal">Закрыть</button>
                 </div>
             </div>
         </div>
+    </div>
+    <!--Модальное окно для информации о чате-->
+	<div class="modal fade" id="Modal-info" tabindex="-1" aria-labelledby="ModalLabel">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Информация о чате</h5>
+                    <div class="">
+                    
+					</div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-modal" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Модальное окно для добавления чата-->
+	<div class="modal fade" id="Modal-chat" tabindex="-1" aria-labelledby="ModalLabel">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Добавление чата</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating">
+          <input type="text" class="form-control" placeholder="Название чата">
+          <label for="floatingInput">Ввод названия чата</label>
+        </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-modal" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+<<<<<<< HEAD
     </div>  
     <!--Модальное окно информации о чате-->
 	<div class="modal modal-show-info fade" id="Modal-chat" tabindex="-1" aria-labelledby="ModalLabel">
@@ -196,9 +229,11 @@
         </div>
     </div> 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+=======
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
+>>>>>>> b6c75b3273566c5cacf1bd82c3d8fc157341dcfe
 	<script src="./bootstrap5/js/bootstrap.js"></script>
-	
 	<script src="chat.js"></script>
 </body>
-
 </html>
