@@ -13,10 +13,10 @@
 </head>
 <body class="h-100" id="ID">
     <div class="row h-100">
-        <div class="contacts card p-0 rounded-0 col-sm-4 col-md-3 col-lg-3 ">
+        <div class="contactsArea card p-0 rounded-0 col-sm-4 col-md-3 col-lg-3 ">
             <div class="card-header row">
-            <div class="col-1">
-                <i class="bi bi-chat" type="button" class="add_chat" data-bs-toggle="modal" data-bs-target="#Modal-chat"></i>
+            <div class="col-1 create_chat">
+                <i class="bi bi-chat" type="button" data-bs-toggle="modal" data-bs-target="#Modal-chat"></i>
             </div>
             <div class="col input-group">
 						<input type="text" placeholder="Поиск..." name="" class="form-control search p-0" style="height:24px">
@@ -32,19 +32,19 @@
                     <i class="bi bi-arrow-left float-start"></i>
                 </div>
                 <div class="col-9 chat-title">
-                    Иван Иванов
+                    
                 </div>
                 <div class="col-2 p-0 dropdown">
                     <i class="bi bi-three-dots-vertical float-end" type="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
                     <ul class="dropdown-menu">
+                    	<li>
+                                <a type="button" class="dropdown-item add_user" data-bs-toggle="modal" data-bs-target="#Modal-info">
+                                    Информация о чате
+                                </a>
+                        </li>
 							<li>
                                 <a type="button" class="dropdown-item add_user" data-bs-toggle="modal" data-bs-target="#Modal">
                                     Добавить пользователя
-                                </a>
-                            </li>
-                            <li>
-                                <a type="button" class="dropdown-item add_user" data-bs-toggle="modal" data-bs-target="#Modal-info">
-                                    Информация о чате
                                 </a>
                             </li>
 							<li>
@@ -55,7 +55,7 @@
                 </div>
             </div>
             <div class="card-body bg-light messageArea">
-                card-body
+                
             </div>
             <div class="card-footer d-flex">
                 <label class="btn ps-0 pb-0 pe-8 pt-0" style="padding-right:8px;" for="file-input">

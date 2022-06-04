@@ -2,6 +2,7 @@ const messageArea = document.querySelector(".messageArea")
 const messageIn = document.querySelector("#messageIn")
 const sendBtn = document.querySelector("#sendBtn")
 const contacts = document.querySelector(".contacts")
+const contactsArea = document.querySelector(".contactsArea")
 const chatArea = document.querySelector('.chat');
 
 function getMessagesFromDB() {
@@ -13,16 +14,17 @@ function getMessagesFromDB() {
         document.querySelector(".chat-title").innerHTML = ''
         document.querySelector(".chat-title").appendChild(title)
         response.data.forEach((message) => {
+        	time = new Date(message['datetime']).toLocaleString("ru-RU").slice(0, -3)
             div = document.createElement('div')
             if (message['usr_id'] === sessionStorage['usr_id']) {
             	if (message['is_file'] == 0) {
             		div.innerHTML = (
-                    `<div class='d-flex justify-content-end mb-4'>
+                    `<div class='d-flex justify-content-end mb-3'>
                     <div class='msg_container_send'>
                     ${message['content']}
-                    <span class='msg_time_send'>${message['datetime']}</span></div>
+                    <span class='msg_time_send'>${time}</span></div>
                     <div class='img_cont_msg'>
-                    <img src='./assets/usr_images/${message['img']}'     
+                    <img src='./assets/usr_images/${message['img']}'
                     class='rounded-circle user_img_msg'></div>
                     </div>`
                 )
@@ -32,7 +34,7 @@ function getMessagesFromDB() {
             		var index = path.lastIndexOf("/")
             		var fileName = path.substring(index + 1, path.length)
             		div = document.createElement('div')
-    				div.innerHTML = (`<div class='d-flex justify-content-end mb-4'>
+    				div.innerHTML = (`<div class='btn d-flex justify-content-end mb-4'>
                     <div class='msg_container_send'>
                     <img src='./assets/icons/file.png'
                     class='rounded-circle user_img_msg'>${fileName}</div>
@@ -40,7 +42,21 @@ function getMessagesFromDB() {
                     <img src='./assets/usr_images/${message['img']}'     
                     class='rounded-circle user_img_msg'></div>
                     </div>`
-    				)				
+    				)
+    				div.addEventListener("click", () => {
+    					console.log("load file")
+    					const promise2 = loadFile('uploads/test.txt')
+    					promise2.then(response2 => {
+    						console.log(response2)
+    						const url = window.URL.createObjectURL(new Blob([response2.data]))
+							const link = document.createElement('a')
+							link.href = url
+							link.setAttribute('download', 'test.txt')
+							document.body.appendChild(link)
+							link.click()
+							link.remove()
+    					})
+    				})			
             	}
                 
             }
@@ -54,7 +70,7 @@ function getMessagesFromDB() {
 		            </div>
                     <div class='msg_container'>
                     ${message['content']}
-                    <span class='msg_time'>${message['datetime']}</span></div>
+                    <span class='msg_time'>${time}</span></div>
                     </div>
                     </div>`
                 	)
@@ -73,6 +89,9 @@ function getMessagesFromDB() {
                     class='rounded-circle user_img_msg'>${fileName}</div>
                     </div>`
     				)
+    				div.addEventListener("click", () => {
+    					console.log("load file")
+    				})
             	}
                 
             }
@@ -85,79 +104,87 @@ function updateChats(response) {
     const promise = getChats(sessionStorage['usr_id'])
     promise.then(response => {
     	contacts.innerHTML = ''
+    	var i = 0
     	response.data.forEach((chat) => {
-    		bg = 'bg-danger'
+    		var countMsg = ''
     		countNotReadMsgs = chat['count']
-    		if (countNotReadMsgs == 0) {
-    			bg = ''
-    			countNotReadMsgs = ''
+    		if (countNotReadMsgs != 0) {
+    			countMsg = `<div class="col-1 modal-dialog-centered" style="padding-right:24px;">
+				    <i class="float-end align-self-center bg-danger countmsg rounded-circle">
+				    &nbsp;&nbsp;${countNotReadMsgs}&nbsp;&nbsp;</i>
+				</div>`
     		}
     		let src = './assets/icons/group.png';
     		if (chat['img'] != null) {
     			src = './assets/usr_images/' + chat['img'];
     		}
 		    contact = document.createElement('li')
-		    contact.classList.add("row", "btn", "d-flex", "p-0", "m-0")
+		    contact.classList.add("row", "btn", "d-flex", "p-0", "m-0", "rounded-0")
 		    contact.innerHTML = (
-		    `<div class="col-2 img_cont">
+		    	`<div class="col-2 img_cont">
 				    <img src="${src}" class="rounded-circle user_img">
-					</div>
-				    <div class="col-6 user_info text-truncate align-self-center">
-				        ${chat['name']}
-				    </div>
-				    <div class="col-1 modal-dialog-centered">
-				    <i class="float-end align-self-center ${bg} countmsg rounded-circle">
-				    &nbsp;&nbsp;${countNotReadMsgs}&nbsp;&nbsp;</i>
-				    </div>`
+				</div>
+				<div class="col user_info text-truncate align-self-center" >${chat['name']}</div>
+				${countMsg}
+				`
 			)
-			//FIXME <p>Егор Блинов: пара в 13:35</p>
-			contacts.appendChild(contact)
-			contact.addEventListener("click", () => {
+			contact.addEventListener("mouseover", function() {
+				if (!Array.from(this.classList).includes("active")) {
+            		this.style.backgroundColor = "#F0F8FF"
+            	}
+            })
+            contact.addEventListener("mouseout", function() {
+            	if (!Array.from(this.classList).includes("active")) {
+            		this.style.backgroundColor = "white"
+            	}
+            })
+			contact.addEventListener("click", function() {
 				sessionStorage['chat_id'] = chat['chat_id']
 				sessionStorage['name'] = chat['name'];
 				if (window.innerWidth < 576) {
                     chatArea.classList.remove("d-none", "d-sm-block")
-                    contacts.classList.add("d-none", "d-sm-block")
-                    contact.style.visibility = "visible"
+                    contactsArea.classList.add("d-none", "d-sm-block")
+                    this.style.visibility = "visible"
                 }
-                if (document.querySelector(".active"))
+                if (document.querySelector(".active")) {
+                	document.querySelector(".active").style.backgroundColor = "white"
                     document.querySelector(".active").classList.remove("active")
-                contact.classList.add("active")
+                }
+                this.classList.add("active")
+                this.style.backgroundColor = "lightblue"
 			    getMessagesFromDB()
 			})
-			contact.addEventListener("mouseover", () => {
-                contact.style.backgroundColor = "#F0F8FF"
-            })
-            contact.addEventListener("mouseover", () => {
-                contact.style.backgroundColor = "white"
-            })
+			contacts.appendChild(contact)
+			i += 1
     	})
     })
     
 }
 
 function showList(form) {
+	clearInterval(intervalUpdateChats)
 	form.innerHTML = ''
     const promise = searchUser(search.value)
     promise.then((response) => {
         response.data.forEach((contact) => {
-            div = document.createElement('div')
-            div.innerHTML = (`<li type=button>
-				    <div class="d-flex bd-highlight">
-				    <div class="img_cont">
-				    <img src="./assets/usr_images/${contact['img']}" 
-				    class="rounded-circle user_img">
-					</div>
-				    <div class="user_info">
-				    <span>${contact['firstname']} ${contact['lastname']}</span>
-				    </div>
-				    </div>
-				</li>`
-				)
-		    form.appendChild(div)
-		    div.addEventListener("click", () => {
-		    	//FIXME
-		        //getMessagesFromDB()
+            searchContact = document.createElement('li')
+            searchContact.classList.add("row", "btn", "d-flex", "p-0", "m-0", "rounded-0")
+            searchContact.innerHTML = (`
+				<div class="col-2 img_cont">
+				<img src="./assets/usr_images/${contact['img']}" 
+				class="rounded-circle user_img">
+				</div>
+				<div class="col user_info text-truncate align-self-center">
+				${contact['firstname']} ${contact['lastname']}
+				</div>
+				</div>`
+			)
+		    form.appendChild(searchContact)
+		    searchContact.addEventListener("click", () => {
+		        getMessagesFromDB()
+		        search.value = ""
+		        updateChats()
+		    	intervalUpdateChats = window.setInterval(updateChats, 3000)
 		    })
         })
     })   
@@ -221,7 +248,6 @@ function saveFileToDB(input) {
     const promise = saveFile(formData)
     promise.then(response => {
         addMessage(1, response.data)
-        //showFile(input, response.data)
     })
 }
 
@@ -269,12 +295,21 @@ function addMessage(is_file, filePath) {
         	//}
         //})
     })
+    messageIn.value = ""
 }
 
 if (typeof sessionStorage['session_id'] === 'undefined') {
 	//FIXME add print message
 	window.location.href = 'index.html'
 }
+
+messageIn.addEventListener("keyup", (event) => {
+	event.preventDefault()
+	if (messageIn.value != "") {
+		if (event.keyCode === 13)
+			sendBtn.click()
+	}
+})
 
 sendBtn.addEventListener("click", () => {
     addMessage(0, '', '');
@@ -299,17 +334,11 @@ create_chat.addEventListener("click", () => {
     })
 })
 
-const add_user = document.querySelector(".add_user")
-add_user.addEventListener("click", () => {
-    
-})
-
 window.addEventListener("resize", () => {
-    console.log(window.innerWidth)
     if (window.innerWidth > 576) {
         btnBackContacts.style.visibility = "hidden"
         chatArea.classList.remove("d-none", "d-sm-block")
-        contacts.classList.remove("d-none", "d-sm-block")
+        contactsArea.classList.remove("d-none", "d-sm-block")
     }
     else if (window.innerWidth < 576) {
         if (btnBackContacts.style.visibility != "visible") {
@@ -322,7 +351,7 @@ window.addEventListener("resize", () => {
 const btnBackContacts = document.querySelector('.back-contacts')
 btnBackContacts.addEventListener("click", () => {
     chatArea.classList.add("d-none", "d-sm-block")
-    contacts.classList.remove("d-none", "d-sm-block")
+    contactsArea.classList.remove("d-none", "d-sm-block")
 })
 
 const logout = document.querySelector(".logout")
@@ -335,7 +364,12 @@ if (window.innerWidth < 576) {
     chatArea.classList.add("d-none", "d-sm-block")
 }
 
+// Очистка форм
+search.value = ""
+messageIn.value = ""
+search_modal.value = ""
+
 updateChats()
-timeoutID = window.setInterval(updateChats, 3000)
-timeoutID = window.setInterval(getMessagesFromDB, 3000)
+intervalUpdateChats = window.setInterval(updateChats, 3000)
+intervalGetMessages = window.setInterval(getMessagesFromDB, 3000)
 

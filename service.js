@@ -78,6 +78,17 @@ function saveFile(file) {
     })
 }
 
+function loadFile(filePath) {
+	const promise = axios({
+		method: 'get',
+		url: filePath,
+		responseType: 'blob'
+	})
+	return promise.then(response => {
+		return response
+	})
+}
+
 function auth(login, password) {
     const promise =  axios({
         method: 'post',
