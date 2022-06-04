@@ -54,6 +54,7 @@
                                     Добавить пользователя
                                 </button>     
                             </li>
+                            <li><a type="button" class="dropdown-item show_info data-bs-toggle="modal" data-bs-target="#Modal-chat"">Информация о чате</a></li>
 							<li>
 								<hr class="dropdown-divider">
 							</li>
@@ -91,14 +92,49 @@
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Информация о чате</h5>
                     <!--<h5 class="modal-title" id="exampleModalLabel">Добавление пользователя</h5>-->
-                    <div class="col input-group">
-						<input type="text" placeholder="Поиск..." name="" class="form-control search-modal">
-					</div>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    
+                    <button type="button" class="search_modal search-modal btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    
+                    <li type="button">
+		        	<div class="row bd-highlight m-0">
+				    <div class="col-3 img_cont">
+				    <img src="./assets/usr_images/usr_297.jpg" 
+				    class="rounded-circle user_img">
+					</div>
+				    <div class="col-7 user_info">
+				    <span>Иван Иванов</span>
+				    <p>IVT82002</p>
+				    </div>
+				    </div>
+				</li>
+				<li type="button">
+		        	<div class="row bd-highlight m-0">
+				    <div class="col-3 img_cont">
+				    <img src="./assets/usr_images/usr_298.jpg" 
+				    class="rounded-circle user_img">
+					</div>
+				    <div class="col-7 user_info">
+				    <span>Александр Руденко</span>
+				    <p>IVT82001</p>
+				    </div>
+				    </div>
+				</li>
+				<li type="button">
+		        	<div class="row bd-highlight m-0">
+				    <div class="col-3 img_cont">
+				    <img src="./assets/usr_images/usr_305.jpg" 
+				    class="rounded-circle user_img">
+					</div>
+				    <div class="col-7 user_info">
+				    <span>Наталья Иванова</span>
+				    <p>Tutor</p>
+				    
+				    </div>
+				    </div>
+				</li>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary btn-modal" data-bs-dismiss="modal">Close</button>
@@ -106,6 +142,59 @@
             </div>
         </div>
     </div>  
+    <!--Модальное окно информации о чате-->
+	<div class="modal modal-show-info fade" id="Modal-chat" tabindex="-1" aria-labelledby="ModalLabel">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Информация о чате</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body modal-show-info-body">
+                    <li type="button">
+		        	<div class="row bd-highlight m-0">
+				    <div class="col-3 img_cont">
+				    <img src="./assets/usr_images/usr_297.jpg" 
+				    class="rounded-circle user_img">
+					</div>
+				    <div class="col-7 user_info">
+				    <span>Иван Иванов</span>
+				    <p>IVT82002</p>
+				    </div>
+				    </div>
+				</li>
+				<li type="button">
+		        	<div class="row bd-highlight m-0">
+				    <div class="col-3 img_cont">
+				    <img src="./assets/usr_images/usr_298.jpg" 
+				    class="rounded-circle user_img">
+					</div>
+				    <div class="col-7 user_info">
+				    <span>Александр Руденко</span>
+				    <p>IVT82001</p>
+				    </div>
+				    </div>
+				</li>
+				<li type="button">
+		        	<div class="row bd-highlight m-0">
+				    <div class="col-3 img_cont">
+				    <img src="./assets/usr_images/usr_305.jpg" 
+				    class="rounded-circle user_img">
+					</div>
+				    <div class="col-7 user_info">
+				    <span>Наталья Иванова</span>
+				    <p>Tutor</p>
+				    
+				    </div>
+				    </div>
+				</li>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-modal" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div> 
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js"></script>
 	<script src="./bootstrap5/js/bootstrap.js"></script>
 	

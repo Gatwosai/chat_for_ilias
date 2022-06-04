@@ -26,16 +26,6 @@ function getMessages(chat_id, usr_id) {
     })
 }
 
-function checkNewMessagesFromDB(chat_id) {
-    const promise = axios({
-        method: 'get',
-        url: `server/check_messages.php?chat_id=${chat_id}`
-    })
-    return promise.then((response) => {
-        return response
-    })
-}
-
 function getChats(usr_id) {
     const promise = axios({
         method: 'get',
