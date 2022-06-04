@@ -1,12 +1,12 @@
 body,
 html {
-	height: 100%;
-	overflow: hidden;
+	overflow-x: hidden;
+	min-width: 228px;
 }
 
 .user_img {
-    height: 70px;
-    width: 70px;
+    height: 60px;
+    width: 60px;
 }
 
 .user_info {
@@ -15,16 +15,14 @@ html {
     margin-left: 15px;
 }
 
-.contacts li{
+.contacts li {
     width: 100% !important;
-    padding: 5px 10px;
-    margin-bottom: 15px !important;
 }
 
-.img_cont{
+.img_cont {
     position: relative;
-    height: 70px;
-    width: 70px;
+    height: 60px;
+    width: 60px;
 }
 
 .countmsg {
@@ -108,3 +106,12 @@ html {
 .card{
 	height: 100%;
 }
+
+.back-contacts {
+    visibility: hidden;
+}
+
+.active {
+    background-color: lightblue;
+}
+

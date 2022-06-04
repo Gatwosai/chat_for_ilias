@@ -2,6 +2,7 @@ const messageArea = document.querySelector(".messageArea")
 const messageIn = document.querySelector("#messageIn")
 const sendBtn = document.querySelector("#sendBtn")
 const contacts = document.querySelector(".contacts")
+const chatArea = document.querySelector('.chat');
 
 function getMessagesFromDB() {
     const promise = getMessages(sessionStorage['chat_id'], sessionStorage['usr_id'])
@@ -96,18 +97,16 @@ function updateChats(response) {
     			src = './assets/usr_images/' + chat['img'];
     		}
 		    contact = document.createElement('li')
-		    contact.classList.add('row')
-		    contact.classList.add('btn')
-		    contact.classList.add('d-flex')
+		    contact.classList.add("row", "btn", "d-flex", "p-0", "m-0")
 		    contact.innerHTML = (
 		    `<div class="col-2 img_cont">
 				    <img src="${src}" class="rounded-circle user_img">
 					</div>
-				    <div class="col-7 user_info">
-				    <span>${chat['name']}</span>
+				    <div class="col-6 user_info text-truncate align-self-center">
+				        ${chat['name']}
 				    </div>
 				    <div class="col-1 modal-dialog-centered">
-				    <i class="align-centered ${bg} countmsg rounded-circle">
+				    <i class="float-end align-self-center ${bg} countmsg rounded-circle">
 				    &nbsp;&nbsp;${countNotReadMsgs}&nbsp;&nbsp;</i>
 				    </div>`
 			)
@@ -116,8 +115,22 @@ function updateChats(response) {
 			contact.addEventListener("click", () => {
 				sessionStorage['chat_id'] = chat['chat_id']
 				sessionStorage['name'] = chat['name'];
+				if (window.innerWidth < 576) {
+                    chatArea.classList.remove("d-none", "d-sm-block")
+                    contacts.classList.add("d-none", "d-sm-block")
+                    contact.style.visibility = "visible"
+                }
+                if (document.querySelector(".active"))
+                    document.querySelector(".active").classList.remove("active")
+                contact.classList.add("active")
 			    getMessagesFromDB()
 			})
+			contact.addEventListener("mouseover", () => {
+                contact.style.backgroundColor = "#F0F8FF"
+            })
+            contact.addEventListener("mouseover", () => {
+                contact.style.backgroundColor = "white"
+            })
     	})
     })
     
@@ -291,11 +304,36 @@ add_user.addEventListener("click", () => {
     
 })
 
+window.addEventListener("resize", () => {
+    console.log(window.innerWidth)
+    if (window.innerWidth > 576) {
+        btnBackContacts.style.visibility = "hidden"
+        chatArea.classList.remove("d-none", "d-sm-block")
+        contacts.classList.remove("d-none", "d-sm-block")
+    }
+    else if (window.innerWidth < 576) {
+        if (btnBackContacts.style.visibility != "visible") {
+            btnBackContacts.style.visibility = "visible"
+            chatArea.classList.add("d-none", "d-sm-block")
+        }
+    }
+})
+
+const btnBackContacts = document.querySelector('.back-contacts')
+btnBackContacts.addEventListener("click", () => {
+    chatArea.classList.add("d-none", "d-sm-block")
+    contacts.classList.remove("d-none", "d-sm-block")
+})
+
 const logout = document.querySelector(".logout")
 logout.addEventListener("click", () => {
 	sessionStorage.clear();
 	window.location.href = 'index.html'
 })
+
+if (window.innerWidth < 576) {
+    chatArea.classList.add("d-none", "d-sm-block")
+}
 
 updateChats()
 timeoutID = window.setInterval(updateChats, 3000)
