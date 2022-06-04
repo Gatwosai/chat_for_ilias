@@ -81,7 +81,7 @@ function getMessagesFromDB() {
     })
 }
 
-function updateChats() {
+function updateChats(response) {
     const promise = getChats(sessionStorage['usr_id'])
     promise.then(response => {
     	contacts.innerHTML = ''
@@ -200,6 +200,20 @@ function showListUsersAdd(form) {
     })
 }
 
+function showFile(fileName, justify) {
+    fileDiv = document.createElement('div')
+    fileDiv.innerHTML = (`<div class='d-flex justify-content-end mb-4'>
+                    <div class='msg_container_send'>
+                    <img src='./assets/icons/file.png'
+                    class='rounded-circle user_img_msg'>${fileName}</div>
+                    <div class='img_cont_msg'>
+                    <img src='./assets/usr_images/${sessionStorage['img']}'     
+                    class='rounded-circle user_img_msg'></div>
+                    </div>`
+    )
+    messageArea.appendChild(fileDiv)
+}
+
 function saveFileToDB(input) {
     file = input.files[0]
     formData = new FormData()
@@ -285,8 +299,6 @@ create_chat.addEventListener("click", () => {
     })
 })
 
-<<<<<<< HEAD
-=======
 const add_user = document.querySelector(".add_user")
 add_user.addEventListener("click", () => {
     
@@ -313,7 +325,6 @@ btnBackContacts.addEventListener("click", () => {
     contacts.classList.remove("d-none", "d-sm-block")
 })
 
->>>>>>> b6c75b3273566c5cacf1bd82c3d8fc157341dcfe
 const logout = document.querySelector(".logout")
 logout.addEventListener("click", () => {
 	sessionStorage.clear();
