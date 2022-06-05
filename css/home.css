@@ -17,7 +17,6 @@ html {
 
 .contacts li {
     width: 100% !important;
-    overflow-x: hidden;
 }
 
 .img_cont {
@@ -99,10 +98,16 @@ html {
 	height: 100%;
 }
 
-.card{
+.card {
 	height: 100%;
+}
+
+.chat {
 	overflow-y: scroll;
-	overflow-x: hidden;
+}
+
+.card-body {
+	width: 100%;
 }
 
 .back-contacts {

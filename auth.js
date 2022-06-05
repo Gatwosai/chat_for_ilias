@@ -8,6 +8,8 @@ btnAuth.addEventListener("click", () => {
         sessionStorage.setItem("session_id", response.data["session_id"])
         sessionStorage.setItem("usr_id", response.data["usr_id"])
         sessionStorage.setItem("img", response.data["img"])
-        window.location.href = 'home.html'
+        console.log(sessionStorage['session_id'])
+        if (sessionStorage['session_id'] != 'undefined')
+        	window.location.href = 'home.html'
    })
 })

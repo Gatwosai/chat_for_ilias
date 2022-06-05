@@ -21,7 +21,7 @@ $i = 0;
 $data = array();
 foreach ($chats as $key => $el) {
 	$data[$key] = $el;
-	if ($el['usr_id'] != 0) {
+	if ($el['usr_id'] != null) {
 		$data[$key] += ['img' => $imgs[$i]];
 		$i = $i + 1;
 	}

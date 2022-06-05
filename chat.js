@@ -1,3 +1,7 @@
+if (sessionStorage['session_id'] === 'undefined') {
+	window.location.href = 'index.html'
+}
+
 const messageArea = document.querySelector(".messageArea")
 const messageIn = document.querySelector("#messageIn")
 const sendBtn = document.querySelector("#sendBtn")
@@ -44,14 +48,16 @@ function getMessagesFromDB() {
                     </div>`
     				)
     				div.addEventListener("click", () => {
-    					console.log("load file")
-    					const promise2 = loadFile('uploads/test.txt')
+    					request = path.substring(path.lastIndexOf("uploads"), path.length)
+    					console.log(request)
+    					console.log(fileName)
+    					const promise2 = loadFile(request)
     					promise2.then(response2 => {
     						console.log(response2)
     						const url = window.URL.createObjectURL(new Blob([response2.data]))
 							const link = document.createElement('a')
 							link.href = url
-							link.setAttribute('download', 'test.txt')
+							link.setAttribute('download', fileName)
 							document.body.appendChild(link)
 							link.click()
 							link.remove()
@@ -100,11 +106,10 @@ function getMessagesFromDB() {
     })
 }
 
-function updateChats(response) {
+function updateChats() {
     const promise = getChats(sessionStorage['usr_id'])
     promise.then(response => {
     	contacts.innerHTML = ''
-    	var i = 0
     	response.data.forEach((chat) => {
     		var countMsg = ''
     		countNotReadMsgs = chat['count']
@@ -114,17 +119,21 @@ function updateChats(response) {
 				    &nbsp;&nbsp;${countNotReadMsgs}&nbsp;&nbsp;</i>
 				</div>`
     		}
-    		let src = './assets/icons/group.png';
+    		let src = './assets/icons/group.png'
     		if (chat['img'] != null) {
-    			src = './assets/usr_images/' + chat['img'];
+    			src = './assets/usr_images/' + chat['img']
     		}
 		    contact = document.createElement('li')
 		    contact.classList.add("row", "btn", "d-flex", "p-0", "m-0", "rounded-0")
+		    if (chat['chat_id'] === sessionStorage['chat_id']) {
+		    	contact.classList.add("active")
+		    	contact.style.backgroundColor = "lightblue"
+		    }
 		    contact.innerHTML = (
 		    	`<div class="col-2 img_cont">
 				    <img src="${src}" class="rounded-circle user_img">
 				</div>
-				<div class="col user_info text-truncate align-self-center" >${chat['name']}</div>
+				<div class="col user_info text-truncate align-self-center">${chat['name']}</div>
 				${countMsg}
 				`
 			)
@@ -155,7 +164,6 @@ function updateChats(response) {
 			    getMessagesFromDB()
 			})
 			contacts.appendChild(contact)
-			i += 1
     	})
     })
     
@@ -164,7 +172,7 @@ function updateChats(response) {
 function showList(form) {
 	clearInterval(intervalUpdateChats)
 	form.innerHTML = ''
-    const promise = searchUser(search.value)
+    const promise = searchChat(search.value)
     promise.then((response) => {
         response.data.forEach((contact) => {
             searchContact = document.createElement('li')
@@ -187,7 +195,11 @@ function showList(form) {
 		    	intervalUpdateChats = window.setInterval(updateChats, 3000)
 		    })
         })
-    })   
+    })
+    //const promise2 = searchMessage(search.value)
+    //promise2.then(response => {
+    	
+    //})
 }
 
 function showListUsersAdd(form) {
@@ -206,9 +218,6 @@ function showListUsersAdd(form) {
 				    <span>${contact['firstname']} ${contact['lastname']}</span>
 				    <p>${contact['login']}</p>
 				    </div>
-				    <div class="col-2 bd-highlight modal-dialog-centered">
-				    <i class="fas fa-user-check"></i>
-				    </div>
 				    </div>
 				</li>`
 		    )
@@ -220,7 +229,6 @@ function showListUsersAdd(form) {
 		        promise.then((response) => {
 		            alert("Пользователь добавлен")
 		            document.querySelector('.btn-modal').click()
-		            //FIXME create form
 		        })    
 		    })
         })
@@ -266,6 +274,64 @@ function lastSeen(usr_id) {
 	})
 }
 
+function showInfo() {
+	modalInfoBody.innerHTML = ''
+	const promise = getInfo(sessionStorage['chat_id'])
+	var i = 0
+	promise.then(response => {
+		data = response.data
+		var creator = data.pop()
+		data.forEach((contact) => {
+			classBtn = 'btn-delete' + i
+			btnClose = `<div class="col-2 bd-highlight modal-dialog-centered justify-content-end">
+				    <button type="button" class="btn-close ${classBtn} float-end"></button>
+				    </div>`
+			if (creator != sessionStorage['usr_id']) {
+				btnClose = ""	
+			}
+			usrInfo = ""
+			if (contact['tutor'] === "1") {
+				usrInfo = "Преподаватель"
+			}
+			else {
+				usrInfo = "Студент"
+			}
+            div = document.createElement('div')
+            div.innerHTML = ( `<li>
+		        	<div class="row bd-highlight m-0">
+				    <div class="col-3 img_cont">
+				    <img src="./assets/usr_images/${contact['img']}" 
+				    class="rounded-circle user_img">
+					</div>
+				    <div class="col-7 user_info">
+				    <span>${contact['firstname']} ${contact['lastname']}</span>
+				    <p>${usrInfo}</p>
+				    </div>
+				    ${btnClose}
+				    </div>
+				</li>`
+		    )
+		    modalInfoBody.appendChild(div)
+		    usr_id = contact['usr_id']
+		    if (creator === sessionStorage['usr_id']) {
+		    	document.querySelector('.' + classBtn).addEventListener('click', () => {
+					const promise2 = deleteUserFromChat(usr_id, sessionStorage['chat_id'])
+					promise2.then(response2 => {
+						if (usr_id === sessionStorage['usr_id']) {
+							alert("Вы вышли из чата")
+						}
+						else {
+							alert("Пользователь удален из чата")
+						}
+						showInfo()
+		    		})
+		    	})
+		    }
+		    i += 1
+        })
+	})
+}
+
 function addMessage(is_file, filePath) {
 	const now = new Date().toLocaleString("ru-RU").replace(",", "")
     usr_id = sessionStorage['usr_id']
@@ -298,11 +364,6 @@ function addMessage(is_file, filePath) {
     messageIn.value = ""
 }
 
-if (typeof sessionStorage['session_id'] === 'undefined') {
-	//FIXME add print message
-	window.location.href = 'index.html'
-}
-
 messageIn.addEventListener("keyup", (event) => {
 	event.preventDefault()
 	if (messageIn.value != "") {
@@ -317,20 +378,22 @@ sendBtn.addEventListener("click", () => {
 
 const search = document.querySelector(".search")
 search.addEventListener("input", () => {
-    showList(contacts)
+	if (search_modal.value != "")
+    	showList(contacts)
 })
 const search_modal = document.querySelector(".search-modal")
 search_modal.addEventListener("input", () => {
-    showListUsersAdd(document.querySelector(".modal-body"))
+	if (search_modal.value != "")
+    	showListUsersAdd(document.querySelector(".modal-body"))
 })
 
 const create_chat = document.querySelector(".create_chat")
 create_chat.addEventListener("click", () => {
     id = sessionStorage['usr_id']
-    name = prompt('Ввод названия чата', '')
+    name = document.querySelector(".name-chat").value
     const promise = addChat(id, name)
     promise.then((response) => {
-        messageArea.innerHTML = ''
+    	alert("Чат успешно создан")
     })
 })
 
@@ -360,6 +423,12 @@ logout.addEventListener("click", () => {
 	window.location.href = 'index.html'
 })
 
+const modalInfo = document.querySelector("#Modal-info")
+const modalInfoBody = document.querySelector(".modal-body-info")
+modalInfo.addEventListener('shown.bs.modal', () => {
+	showInfo()
+})
+
 if (window.innerWidth < 576) {
     chatArea.classList.add("d-none", "d-sm-block")
 }
@@ -369,7 +438,6 @@ search.value = ""
 messageIn.value = ""
 search_modal.value = ""
 
-updateChats()
 intervalUpdateChats = window.setInterval(updateChats, 3000)
 intervalGetMessages = window.setInterval(getMessagesFromDB, 3000)
 

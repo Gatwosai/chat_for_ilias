@@ -36,7 +36,7 @@ function getChats(usr_id) {
     })
 }
 
-function searchUser(key) {
+function searchChat(key) {
     const promise = axios({
         method: 'get',
         url: `server/search_user.php?key=${key}`
@@ -111,6 +111,30 @@ function sendMail(companion) {
     return promise.then(response => {
         return response
     })
+}
+
+function deleteUserFromChat(usr_id, chat_id) {
+	const promise = axios({
+		method: 'delete',
+		url: 'server/delete_user_from_chat.php',
+		data: { 
+			usr_id: usr_id,
+			chat_id: chat_id,
+		}
+	})
+	return promise.then(response => {
+		return response
+	})
+}
+
+function getInfo(chat_id) {
+	const promise = axios({
+		method: 'get',
+		url: `server/get_info.php?chat_id=${chat_id}`
+	})
+	return promise.then(response => {
+		return response
+	})
 }
 
 function checkLastSeen(usr_id) {
