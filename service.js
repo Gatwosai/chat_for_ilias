@@ -36,16 +36,6 @@ function getChats(usr_id) {
     })
 }
 
-function searchChat(key) {
-    const promise = axios({
-        method: 'get',
-        url: `server/search_user.php?key=${key}`
-    })
-    return promise.then((response) => {
-        return response
-    })
-}
-
 function addChat(id, name) {
     const promise = axios({
         method: 'get',
@@ -103,10 +93,15 @@ function auth(login, password) {
     })
 }
 
-function sendMail(companion) {
+function sendMail(usr_id, content, companion) {
     const promise = axios({
         method: 'put',
-        url: `server/send_mail.php?usr_id=${companion}`
+        url: `server/send_mail.php`,
+        data: {
+        	usr_id: usr_id,
+        	content: content,
+        	companion: companion,
+        }
     })
     return promise.then(response => {
         return response

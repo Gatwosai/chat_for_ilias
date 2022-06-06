@@ -49,11 +49,8 @@ function getMessagesFromDB() {
     				)
     				div.addEventListener("click", () => {
     					request = path.substring(path.lastIndexOf("uploads"), path.length)
-    					console.log(request)
-    					console.log(fileName)
     					const promise2 = loadFile(request)
     					promise2.then(response2 => {
-    						console.log(response2)
     						const url = window.URL.createObjectURL(new Blob([response2.data]))
 							const link = document.createElement('a')
 							link.href = url
@@ -96,7 +93,17 @@ function getMessagesFromDB() {
                     </div>`
     				)
     				div.addEventListener("click", () => {
-    					console.log("load file")
+    					request = path.substring(path.lastIndexOf("uploads"), path.length)
+    					const promise2 = loadFile(request)
+    					promise2.then(response2 => {
+    						const url = window.URL.createObjectURL(new Blob([response2.data]))
+							const link = document.createElement('a')
+							link.href = url
+							link.setAttribute('download', fileName)
+							document.body.appendChild(link)
+							link.click()
+							link.remove()
+    					})
     				})
             	}
                 
@@ -111,30 +118,30 @@ function updateChats() {
     promise.then(response => {
     	contacts.innerHTML = ''
     	response.data.forEach((chat) => {
-    		var countMsg = ''
+    		var bg = ''
     		countNotReadMsgs = chat['count']
     		if (countNotReadMsgs != 0) {
-    			countMsg = `<div class="col-1 modal-dialog-centered" style="padding-right:24px;">
-				    <i class="float-end align-self-center bg-danger countmsg rounded-circle">
-				    &nbsp;&nbsp;${countNotReadMsgs}&nbsp;&nbsp;</i>
-				</div>`
+    			bg = "bg-danger"
+    		}
+    		else {
+    			countNotReadMsgs = ''
     		}
     		let src = './assets/icons/group.png'
     		if (chat['img'] != null) {
     			src = './assets/usr_images/' + chat['img']
     		}
 		    contact = document.createElement('li')
-		    contact.classList.add("row", "btn", "d-flex", "p-0", "m-0", "rounded-0")
+		    contact.classList.add("btn", "d-flex", "rounded-0", "justify-content-between", "mb-3")
 		    if (chat['chat_id'] === sessionStorage['chat_id']) {
 		    	contact.classList.add("active")
 		    	contact.style.backgroundColor = "lightblue"
 		    }
 		    contact.innerHTML = (
-		    	`<div class="col-2 img_cont">
+		    	`<div class="img_cont">
 				    <img src="${src}" class="rounded-circle user_img">
 				</div>
-				<div class="col user_info text-truncate align-self-center">${chat['name']}</div>
-				${countMsg}
+				<div class="user_info flex-grow-1 text-truncate align-self-center">${chat['name']}</div>
+				<div class="${bg} countmsg align-self-center rounded-circle">${countNotReadMsgs}</div>
 				`
 			)
 			contact.addEventListener("mouseover", function() {
@@ -170,36 +177,163 @@ function updateChats() {
 }
 
 function showList(form) {
-	clearInterval(intervalUpdateChats)
 	form.innerHTML = ''
-    const promise = searchChat(search.value)
+    const promise = getChats(sessionStorage['usr_id'])
     promise.then((response) => {
         response.data.forEach((contact) => {
-            searchContact = document.createElement('li')
-            searchContact.classList.add("row", "btn", "d-flex", "p-0", "m-0", "rounded-0")
-            searchContact.innerHTML = (`
-				<div class="col-2 img_cont">
-				<img src="./assets/usr_images/${contact['img']}" 
-				class="rounded-circle user_img">
-				</div>
-				<div class="col user_info text-truncate align-self-center">
-				${contact['firstname']} ${contact['lastname']}
-				</div>
-				</div>`
-			)
-		    form.appendChild(searchContact)
-		    searchContact.addEventListener("click", () => {
-		        getMessagesFromDB()
-		        search.value = ""
-		        updateChats()
-		    	intervalUpdateChats = window.setInterval(updateChats, 3000)
-		    })
+        	if (contact['name'].indexOf(search.value) != -1) {
+        		let src = './assets/icons/group.png'
+				if (contact['img'] != null) {
+					src = './assets/usr_images/' + contact['img']
+				}
+        		searchContact = document.createElement('li')
+		        searchContact.classList.add("row", "btn", "d-flex", "p-0", "m-0", "rounded-0")
+		        searchContact.innerHTML = (`
+					<div class="col-2 img_cont">
+					<img src="${src}"
+					class="rounded-circle user_img">
+					</div>
+					<div class="col user_info text-truncate align-self-center">
+						${contact['name']}
+					</div>
+					</div>`
+				)
+				searchContact.addEventListener("mouseover", function() {
+					if (!Array.from(this.classList).includes("active")) {
+		        		this.style.backgroundColor = "#F0F8FF"
+		        	}
+            	})
+		        searchContact.addEventListener("mouseout", function() {
+		        	if (!Array.from(this.classList).includes("active")) {
+		        		this.style.backgroundColor = "white"
+		        	}
+		        })
+				searchContact.addEventListener("click", function() {
+					sessionStorage['chat_id'] = contact['chat_id']
+					sessionStorage['name'] = contact['name'];
+					if (window.innerWidth < 576) {
+		                chatArea.classList.remove("d-none", "d-sm-block")
+		                contactsArea.classList.add("d-none", "d-sm-block")
+		                this.style.visibility = "visible"
+		            }
+		            if (document.querySelector(".active")) {
+		            	document.querySelector(".active").style.backgroundColor = "white"
+		                document.querySelector(".active").classList.remove("active")
+		            }
+		            this.classList.add("active")
+		            search.value = ""
+		            intervalUpdateChats = window.setInterval(updateChats, 3000)
+					getMessagesFromDB()
+				})
+				form.appendChild(searchContact)
+        	}
         })
     })
-    //const promise2 = searchMessage(search.value)
-    //promise2.then(response => {
-    	
-    //})
+}
+
+function searchMsgForKey() {
+	const promise = getMessages(sessionStorage['chat_id'], sessionStorage['usr_id'])
+    promise.then((response) => {
+        messageArea.innerHTML = ''
+        title = document.createElement('div')
+        title.innerHTML = (`${sessionStorage['name']}`)
+        document.querySelector(".chat-title").innerHTML = ''
+        document.querySelector(".chat-title").appendChild(title)
+        response.data.forEach((message) => {
+        	if (message['content'].indexOf(searchMsg.value) != -1) {
+        		time = new Date(message['datetime']).toLocaleString("ru-RU").slice(0, -3)
+		        div = document.createElement('div')
+		        if (message['usr_id'] === sessionStorage['usr_id']) {
+		        	if (message['is_file'] == 0) {
+		        		div.innerHTML = (
+		                `<div class='d-flex justify-content-end mb-3'>
+		                <div class='msg_container_send'>
+		                ${message['content']}
+		                <span class='msg_time_send'>${time}</span></div>
+		                <div class='img_cont_msg'>
+		                <img src='./assets/usr_images/${message['img']}'
+		                class='rounded-circle user_img_msg'></div>
+		                </div>`
+		            )
+		        	}
+		        	else {
+		        		var path = message['content']
+		        		var index = path.lastIndexOf("/")
+		        		var fileName = path.substring(index + 1, path.length)
+		        		div = document.createElement('div')
+						div.innerHTML = (`<div class='btn d-flex justify-content-end mb-4'>
+		                <div class='msg_container_send'>
+		                <img src='./assets/icons/file.png'
+		                class='rounded-circle user_img_msg'>${fileName}</div>
+		                <div class='img_cont_msg'>
+		                <img src='./assets/usr_images/${message['img']}'     
+		                class='rounded-circle user_img_msg'></div>
+		                </div>`
+						)
+						div.addEventListener("click", () => {
+							request = path.substring(path.lastIndexOf("uploads"), path.length)
+							const promise2 = loadFile(request)
+							promise2.then(response2 => {
+								const url = window.URL.createObjectURL(new Blob([response2.data]))
+								const link = document.createElement('a')
+								link.href = url
+								link.setAttribute('download', fileName)
+								document.body.appendChild(link)
+								link.click()
+								link.remove()
+							})
+						})			
+		        	}
+		        }
+		        else {
+		        	if (message['is_file'] == 0) {
+		        		div.innerHTML = (
+		                `<div class='d-flex justify-content-start mb-4'>
+		                <div class='img_cont_msg'>
+				        <img src='./assets/usr_images/${message['img']}'
+				        class='rounded-circle user_img_msg'>
+				        </div>
+		                <div class='msg_container'>
+		                ${message['content']}
+		                <span class='msg_time'>${time}</span></div>
+		                </div>
+		                </div>`
+		            	)
+		        	}
+		        	else {
+		        		var path = message['content']
+		        		var index = path.lastIndexOf("/")
+		        		var fileName = path.substring(index + 1, path.length)
+		        		div = document.createElement('div')
+						div.innerHTML = (`<div class='d-flex justify-content-starn mb-4'>
+						<div class='img_cont_msg'>
+		                <img src='./assets/usr_images/${message['img']}'     
+		                class='rounded-circle user_img_msg'></div>
+		                <div class='msg_container'>
+		                <img src='./assets/icons/file.png'
+		                class='rounded-circle user_img_msg'>${fileName}</div>
+		                </div>`
+						)
+						div.addEventListener("click", () => {
+							request = path.substring(path.lastIndexOf("uploads"), path.length)
+							const promise2 = loadFile(request)
+							promise2.then(response2 => {
+								const url = window.URL.createObjectURL(new Blob([response2.data]))
+								const link = document.createElement('a')
+								link.href = url
+								link.setAttribute('download', fileName)
+								document.body.appendChild(link)
+								link.click()
+								link.remove()
+							})
+						})	
+		        	}
+		        }
+		        messageArea.appendChild(div)
+        	}
+        	
+        })
+    })
 }
 
 function showListUsersAdd(form) {
@@ -261,17 +395,6 @@ function saveFileToDB(input) {
 
 function mail(companion) {
     const promise = sendMail(companion)
-    promise.then(response => {
-        console.log(response)
-    })
-}
-
-function lastSeen(usr_id) {
-	const promise = checkLastSeen(usr_id)
-	promise.then(response => {
-		//FIXME
-		mail(usr_id)
-	})
 }
 
 function showInfo() {
@@ -295,6 +418,12 @@ function showInfo() {
 			}
 			else {
 				usrInfo = "Студент"
+			}
+			if (parseFloat(contact['last_update']) < 0.83) {// не более 5 минут бездействия
+				usrInfo += ", онлайн"
+			}
+			else {
+				usrInfo += ", оффлайн"
 			}
             div = document.createElement('div')
             div.innerHTML = ( `<li>
@@ -342,24 +471,14 @@ function addMessage(is_file, filePath) {
     }
     const promise = addMessageToDB(usr_id, chat_id, value, now, 0, is_file)
     promise.then((response) => {
-        /*mess = document.createElement('div')      
-        mess.innerHTML = (`<div class='d-flex justify-content-end mb-4'>\
-        <div class='msg_container_send'>\
-        ${messageIn.value}\
-        <span class='msg_time_send'>${now}</span></div>\
-        <div class='img_cont_msg'>
-        <img src='./assets/usr_images/${sessionStorage['img']}' 
-        class='rounded-circle user_img_msg'></div></div>`)
-        messageArea.appendChild(mess)
-        companion = response.data*/
-        //const promise2 = checkLastSeen(companion)
-        //promise2.then(response2 => {
-        	//if (response2 > 2) // Если более двух часов без активности
-        	//{
-        		//FIXME
+        companion = response.data
+        const promise2 = checkLastSeen(companion)
+        promise2.then(response2 => {
+        	if (parseFloat(response2.data) > (1/6)) // Если более 10 минут без активности
+        	{
         		//mail(companion)
-        	//}
-        //})
+        	}
+        })
     })
     messageIn.value = ""
 }
@@ -378,13 +497,29 @@ sendBtn.addEventListener("click", () => {
 
 const search = document.querySelector(".search")
 search.addEventListener("input", () => {
-	if (search_modal.value != "")
-    	showList(contacts)
+	if (search.value != "") {
+		clearInterval(intervalUpdateChats)
+		showList(contacts)
+	}
+	else {
+		intervalUpdateChats = window.setInterval(updateChats, 3000)
+	}	
 })
 const search_modal = document.querySelector(".search-modal")
 search_modal.addEventListener("input", () => {
 	if (search_modal.value != "")
     	showListUsersAdd(document.querySelector(".modal-body"))
+})
+
+const searchMsg = document.querySelector(".search-msg")
+searchMsg.addEventListener("input", () => {
+	if (searchMsg.value != "") {
+		clearInterval(intervalGetMessages)
+		searchMsgForKey()
+	}
+	else {
+		intervalGetMessages = window.setInterval(getMessagesFromDB, 3000)
+	}
 })
 
 const create_chat = document.querySelector(".create_chat")
@@ -431,12 +566,14 @@ modalInfo.addEventListener('shown.bs.modal', () => {
 
 if (window.innerWidth < 576) {
     chatArea.classList.add("d-none", "d-sm-block")
+    btnBackContacts.style.visibility = "visible"
 }
 
 // Очистка форм
 search.value = ""
 messageIn.value = ""
 search_modal.value = ""
+searchMsg.value = ""
 
 intervalUpdateChats = window.setInterval(updateChats, 3000)
 intervalGetMessages = window.setInterval(getMessagesFromDB, 3000)

@@ -51,9 +51,10 @@ class Database {
     //FIXME Свои сообщения
         $sql = "UPDATE message
                 SET is_read=1
-                WHERE chat_id=?";
+                WHERE chat_id=?
+                AND usr_id NOT IN (?)";
         $stmt = $this->connector->prepare($sql);
-	    $stmt->execute([$chat_id]);       
+	    $stmt->execute([$chat_id, $usr_id]);       
         $sql = "SELECT usr_id, content, datetime, is_file
 	            FROM message
 	            WHERE chat_id=?";
@@ -65,9 +66,8 @@ class Database {
     
     function updateLastSeen($usr_id) {
     	$date = date("Y.m.d H:i:s");
-    	return $date;
 		$sql = "UPDATE usr_data
-                SET last_update=$date
+                SET last_update='$date'
                 WHERE usr_id=?";
         $stmt = $this->connector->prepare($sql);
 	    $stmt->execute([$usr_id]);
@@ -114,9 +114,10 @@ class Database {
         	$sql = "SELECT COUNT(1)
 	            FROM message
 	            WHERE chat_id=?
-	            AND is_read=0";
+	            AND is_read=0
+	            AND usr_id NOT IN (?)";
 	    	$stmt = $this->connector->prepare($sql);
-	    	$stmt->execute([$el['chat_id']]);
+	    	$stmt->execute([$el['chat_id'], $usr_id]);
         	$countMsgs = $stmt->fetch()[0];
 			$res[$key] = $el;
         	$res[$key] += ['usr_id' => $companion];
@@ -147,7 +148,7 @@ class Database {
     
     function getInfo($usr_ids) {
     	$in  = str_repeat('?,', count($usr_ids) - 1).'?';
-    	$sql = "SELECT firstname, lastname, login
+    	$sql = "SELECT firstname, lastname, login, last_update
     			FROM usr_data
     			WHERE usr_id IN ($in)";
     	$stmt = $this->connector->prepare($sql);
@@ -162,6 +163,7 @@ class Database {
     	$res = array();
     	foreach ($usrs as $key => $usr) {
     		$res[$key] = $usr;
+    		$res[$key]['last_update'] = (time() - strtotime($res[$key]['last_update'])) / 3600;
     		$res[$key] += ['tutor' => $tutor[$key]]; 
     	}
     	return $res;
@@ -178,13 +180,11 @@ class Database {
     }
     
     function searchUser($key) {
-        //FIXME for search not this id
         $sql = "SELECT usr_id, firstname, lastname, login
                 FROM usr_data
                 WHERE login LIKE '$key%'
                 OR firstname LIKE '$key%'
                 OR lastname LIKE '$key%'";
-        //FIXME mb for first+last name
         $stmt = $this->connector->prepare($sql);
         $stmt->execute();
         $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -268,6 +268,27 @@ class Database {
         $stmt = $this->connector->prepare($sql);
         $stmt->execute([$login]);
         $res = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $res;
+    }
+    
+    function getMail($usr_id) {
+		$sql = "SELECT email
+                FROM usr_data
+                WHERE usr_id=?";
+        $stmt = $this->connector->prepare($sql);
+        $stmt->execute([$usr_id]);
+        $res = $stmt->fetch()[0];
+        return $res;
+    }
+    
+    function getUsrName($usr_id) {
+    	$sql = "SELECT firstname, lastname
+                FROM usr_data
+                WHERE usr_id=?";
+        $stmt = $this->connector->prepare($sql);
+        $stmt->execute([$usr_id]);
+        $name = $stmt->fetch();
+        $res = $name[0]." ".$name[1];
         return $res;
     }
 

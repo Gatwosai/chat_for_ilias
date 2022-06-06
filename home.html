@@ -18,7 +18,7 @@
             <div class="col-1">
                 <i class="bi bi-chat" type="button" data-bs-toggle="modal" data-bs-target="#Modal-chat"></i>
             </div>
-            <div class="col input-group">
+            <div class="col input-group ">
 						<input type="text" placeholder="Поиск..." name="" class="form-control search p-0" style="height:24px">
 					</div>
             </div>
@@ -27,23 +27,31 @@
             </div>
         </div>
         <div class="col-sm-8 col-md-9 col-lg-9 card rounded-0 p-0 chat">
-            <div class="card-header row m-0">
-                <div class="col-1 btn back-contacts p-0" style="height:24px;">
+            <div class="card-header d-flex justify-content-between mb-3">
+                <div class="btn back-contacts p-0" style="height:24px;">
                     <i class="bi bi-arrow-left float-start"></i>
                 </div>
-                <div class="col-9 chat-title">
+                <div class="chat-title flex-grow-1">
                     
                 </div>
-                <div class="col-2 p-0 dropdown">
-                    <i class="bi bi-three-dots-vertical float-end" type="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                <div class="p-0 dropdown">
+                	<i class="bi bi-search" type="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                	<ul class="dropdown-menu">
+                		<div class="input-group">
+						<input type="text" placeholder="Поиск..." name="" class="form-control search-msg p-0">
+					</div>
+                	</ul>
+                </div>
+                <div class="p-0 dropdown">
+                    <i class="bi bi-three-dots-vertical float-end" style="padding-left:12px;" type="button" data-bs-toggle="dropdown" aria-expanded="false"></i>
                     <ul class="dropdown-menu">
                     	<li>
-                                <a type="button" class="dropdown-item add_user" data-bs-toggle="modal" data-bs-target="#Modal-info">
+                                <a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal-info">
                                     Информация о чате
                                 </a>
                         </li>
 							<li>
-                                <a type="button" class="dropdown-item add_user" data-bs-toggle="modal" data-bs-target="#Modal">
+                                <a type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Modal">
                                     Добавить пользователя
                                 </a>
                             </li>

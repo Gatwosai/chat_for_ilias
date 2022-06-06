@@ -1,9 +1,19 @@
 <?php
 // Скрипт для отправки уведомления на почту.
+$data = json_decode(file_get_contents("php://input"), true);
+$usr_id = 305;//$data['usr_id'];
+$content = "123";//$data['chat_id'];
+$companion = 297;//$data['companion'];
+$srv = "localhost";
+$usr = "iliasuser";
+$pass = "123";
+$dbName = "ilias";
+require_once("class.db.php");
+$db = new Database($srv, $usr, $pass, $dbName);
+$name = $db->getUsrName($usr_id);
+$email = $db->getMail($companion);
 
-$content = "Привет! Можешь, пожалуйста, отправить мне материалы для подготовки к экзамену?\r\n";
-$name = "Александр Беляев";
-$to      = 'hognidudre@vusra.com';
+$to = '';//$email;
 $subject = 'Вам пришло новое личное сообщение в чате ILIAS';
 $message = '
 <html>
