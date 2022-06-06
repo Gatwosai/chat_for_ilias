@@ -369,20 +369,6 @@ function showListUsersAdd(form) {
     })
 }
 
-function showFile(fileName, justify) {
-    fileDiv = document.createElement('div')
-    fileDiv.innerHTML = (`<div class='d-flex justify-content-end mb-4'>
-                    <div class='msg_container_send'>
-                    <img src='./assets/icons/file.png'
-                    class='rounded-circle user_img_msg'>${fileName}</div>
-                    <div class='img_cont_msg'>
-                    <img src='./assets/usr_images/${sessionStorage['img']}'     
-                    class='rounded-circle user_img_msg'></div>
-                    </div>`
-    )
-    messageArea.appendChild(fileDiv)
-}
-
 function saveFileToDB(input) {
     file = input.files[0]
     formData = new FormData()
