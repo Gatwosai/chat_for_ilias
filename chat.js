@@ -83,7 +83,7 @@ function getMessagesFromDB() {
             		var index = path.lastIndexOf("/")
             		var fileName = path.substring(index + 1, path.length)
             		div = document.createElement('div')
-    				div.innerHTML = (`<div class='d-flex justify-content-starn mb-4'>
+    				div.innerHTML = (`<div class='btn d-flex justify-content-start mb-4'>
     				<div class='img_cont_msg'>
                     <img src='./assets/usr_images/${message['img']}'     
                     class='rounded-circle user_img_msg'></div>
